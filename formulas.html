@@ -25,6 +25,8 @@
       <a href="chapter2.html">Ch 2</a>
       <a href="chapter3.html">Ch 3</a>
       <a href="formulas.html" class="active">Formulas</a>
+      <a href="quiz.html">Quiz</a>
+      <a href="true-false.html">T/F</a>
     </nav>
   </div>
 </header>
@@ -123,6 +125,66 @@
       <tr><td>$P(a \le X < b)$</td><td>$F(b) - F(a) - p(b) + p(a)$</td></tr>
     </tbody>
   </table>
+</section>
+
+<section class="section">
+  <h2 style="margin-top:0">Continuous random variables (3.3)</h2>
+  <table>
+    <thead><tr><th>Quantity</th><th>Formula</th></tr></thead>
+    <tbody>
+      <tr><td>pdf properties</td><td>$f(x) \ge 0$, $\int_{-\infty}^{\infty} f(x)\,dx = 1$</td></tr>
+      <tr><td>Interval probability</td><td>$P(a \le X \le b) = \int_a^b f(x)\,dx$</td></tr>
+      <tr><td>cdf</td><td>$F(x) = \int_{-\infty}^{x} f(t)\,dt$, &nbsp; $f(x) = F'(x)$</td></tr>
+      <tr><td>Mean</td><td>$E(X) = \int_{-\infty}^{\infty} x f(x)\,dx$</td></tr>
+      <tr><td>Expectation of function</td><td>$E[g(X)] = \int g(x) f(x)\,dx$</td></tr>
+      <tr><td>Variance</td><td>$\mathrm{Var}(X) = E(X^2) - \mu^2$ &nbsp;(same formula)</td></tr>
+      <tr><td>Note</td><td>$P(X = x) = 0$ for every $x$ — so $<$ and $\le$ give the same probability</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section class="section">
+  <h2 style="margin-top:0">Named distributions (3.4)</h2>
+  <table>
+    <thead><tr><th>Distribution</th><th>pmf / pdf</th><th>Mean</th><th>Variance</th></tr></thead>
+    <tbody>
+      <tr><td>Bernoulli(p)</td><td>$p(1) = p$, $p(0) = 1 - p$</td><td>$p$</td><td>$p(1-p)$</td></tr>
+      <tr><td>Binomial(n, p)</td><td>$\binom{n}{k} p^k (1-p)^{n-k}$</td><td>$np$</td><td>$np(1-p)$</td></tr>
+      <tr><td>Geometric(p)</td><td>$(1-p)^{k-1} p$</td><td>$1/p$</td><td>$(1-p)/p^2$</td></tr>
+      <tr><td>Hypergeom(N,K,n)</td><td>$\binom{K}{k}\binom{N-K}{n-k}/\binom{N}{n}$</td><td>$nK/N$</td><td>$n\tfrac{K}{N}\tfrac{N-K}{N}\tfrac{N-n}{N-1}$</td></tr>
+      <tr><td>Poisson(λ)</td><td>$e^{-\lambda} \lambda^k / k!$</td><td>$\lambda$</td><td>$\lambda$</td></tr>
+      <tr><td>Uniform[a, b]</td><td>$1/(b-a)$</td><td>$(a+b)/2$</td><td>$(b-a)^2/12$</td></tr>
+      <tr><td>Exponential(θ)</td><td>$(1/\theta)e^{-x/\theta}$, $x \ge 0$</td><td>$\theta$</td><td>$\theta^2$</td></tr>
+      <tr><td>Normal(μ, σ²)</td><td>$\frac{1}{\sigma\sqrt{2\pi}} e^{-(x-\mu)^2/(2\sigma^2)}$</td><td>$\mu$</td><td>$\sigma^2$</td></tr>
+    </tbody>
+  </table>
+  <p><strong>Standard normal:</strong> if $X \sim N(\mu, \sigma^2)$, then $Z = (X - \mu)/\sigma \sim N(0, 1)$. Then $P(a \le X \le b) = \Phi((b-\mu)/\sigma) - \Phi((a-\mu)/\sigma)$.</p>
+</section>
+
+<section class="section">
+  <h2 style="margin-top:0">Chebyshev's inequality</h2>
+  <div class="formula">
+    For any r.v. with mean $\mu$ and finite variance $\sigma^2$, and any $k > 0$:
+    $$P(|X - \mu| \ge k\sigma) \le \frac{1}{k^2}, \qquad P(|X - \mu| < k\sigma) \ge 1 - \frac{1}{k^2}$$
+  </div>
+  <p>Works for <strong>any</strong> distribution with finite variance. The bound is loose but universal.</p>
+</section>
+
+<section class="section">
+  <h2 style="margin-top:0">Moment generating function (3.5)</h2>
+  <table>
+    <thead><tr><th>Property</th><th>Formula</th></tr></thead>
+    <tbody>
+      <tr><td>Definition</td><td>$M_X(t) = E(e^{tX})$</td></tr>
+      <tr><td>$n$-th moment</td><td>$E(X^n) = M_X^{(n)}(0)$</td></tr>
+      <tr><td>Mean</td><td>$E(X) = M'(0)$</td></tr>
+      <tr><td>Variance</td><td>$\mathrm{Var}(X) = M''(0) - [M'(0)]^2$</td></tr>
+      <tr><td>Sum (independent)</td><td>$M_{X+Y}(t) = M_X(t) M_Y(t)$</td></tr>
+      <tr><td>Linear transformation</td><td>$M_{aX+b}(t) = e^{bt} M_X(at)$</td></tr>
+      <tr><td>Uniqueness</td><td>If $M_X = M_Y$ near 0, then $X$ and $Y$ have the same distribution</td></tr>
+    </tbody>
+  </table>
+  <p><strong>Check:</strong> $M_X(0) = 1$ always.</p>
 </section>
 
 <section class="section">

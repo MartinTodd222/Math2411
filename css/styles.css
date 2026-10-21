@@ -435,3 +435,204 @@ footer {
 }
 
 mark.hl { background: var(--mark-soft); color: var(--ink); padding: 0 3px; }
+
+/* ======== QUIZ ======== */
+.quiz-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin: 16px 0 20px;
+  padding: 14px 18px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+}
+.filters.seg {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+.filters.seg button {
+  padding: 6px 12px;
+  border: 1px solid var(--line);
+  background: var(--bg);
+  color: var(--muted);
+  border-radius: 6px;
+  font-size: 0.88rem;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.filters.seg button:hover { background: var(--accent-soft); color: var(--accent); }
+.filters.seg button[aria-pressed="true"] {
+  background: var(--accent);
+  color: white;
+  border-color: var(--accent);
+}
+.score {
+  margin-left: auto;
+  font-weight: 700;
+  color: var(--ink);
+  font-size: 0.95rem;
+}
+.small-btn {
+  padding: 6px 14px;
+  border: 1px solid var(--line);
+  background: var(--bg);
+  color: var(--muted);
+  border-radius: 6px;
+  font-size: 0.88rem;
+  font-family: inherit;
+  cursor: pointer;
+}
+.small-btn:hover { background: var(--warn); color: white; border-color: var(--warn); }
+
+.qcard {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 20px 24px;
+  margin-bottom: 14px;
+  box-shadow: var(--shadow);
+}
+.qhead {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+  align-items: center;
+}
+.qchip {
+  background: var(--accent-soft);
+  color: var(--accent);
+  padding: 2px 10px;
+  border-radius: 10px;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+.qnum {
+  color: var(--muted);
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+.qtext {
+  font-size: 1.05rem;
+  margin-bottom: 14px;
+  color: var(--ink);
+}
+.options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+@media (max-width: 600px) {
+  .options { grid-template-columns: 1fr; }
+}
+.tf-options { grid-template-columns: 1fr 1fr !important; }
+.opt {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-align: left;
+  padding: 10px 14px;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  color: var(--ink);
+  font-family: inherit;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.1s;
+}
+.opt:hover:not(:disabled) {
+  background: var(--accent-soft);
+  border-color: var(--accent);
+}
+.opt:disabled { cursor: default; }
+.opt-letter {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 24px;
+  height: 24px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  font-weight: 700;
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+.opt.correct {
+  background: #d4f5e0;
+  border-color: var(--good);
+  color: #22543d;
+}
+.opt.correct .opt-letter {
+  background: var(--good);
+  border-color: var(--good);
+  color: white;
+}
+.opt.wrong {
+  background: #fed7d7;
+  border-color: var(--warn);
+  color: #742a2a;
+}
+.opt.wrong .opt-letter {
+  background: var(--warn);
+  border-color: var(--warn);
+  color: white;
+}
+@media (prefers-color-scheme: dark) {
+  .opt.correct { background: #1a3024; color: #9ae6b4; }
+  .opt.wrong { background: #3b1f1f; color: #feb2b2; }
+}
+.tfbtn {
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1rem;
+  padding: 14px;
+}
+.explanation {
+  margin-top: 12px;
+  padding: 12px 16px;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+.explanation.right {
+  background: #e8f6ed;
+  border-left: 4px solid var(--good);
+  color: #22543d;
+}
+.explanation.wrong {
+  background: #fdeaea;
+  border-left: 4px solid var(--warn);
+  color: #742a2a;
+}
+@media (prefers-color-scheme: dark) {
+  .explanation.right { background: #1a3024; color: #c6f6d5; }
+  .explanation.wrong { background: #3b1f1f; color: #fed7d7; }
+}
+
+/* ======== SVG visuals ======== */
+.visual {
+  margin: 16px 0;
+  padding: 14px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  text-align: center;
+}
+.visual svg {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+.visual .caption {
+  margin-top: 8px;
+  font-size: 0.85rem;
+  color: var(--muted);
+  font-style: italic;
+}

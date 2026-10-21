@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Chapter 3 · Random Variables — MATH 2411</title>
+<title>Chapter 3 · Random Variables (3.1–3.5) — MATH 2411</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📈</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -25,6 +25,8 @@
       <a href="chapter2.html">Ch 2</a>
       <a href="chapter3.html" class="active">Ch 3</a>
       <a href="formulas.html">Formulas</a>
+      <a href="quiz.html">Quiz</a>
+      <a href="true-false.html">T/F</a>
     </nav>
   </div>
 </header>
@@ -34,22 +36,26 @@
 <aside class="chapter-sidebar">
   <h4>In this chapter</h4>
   <ul>
-    <li><a href="#rv">What is a random variable?</a></li>
-    <li><a href="#pmf">Probability mass function (pmf)</a></li>
-    <li><a href="#cdf">Cumulative distribution function (cdf)</a></li>
+    <li><a href="#rv">3.1 What is a r.v.?</a></li>
+    <li><a href="#pmf">3.2 pmf</a></li>
+    <li><a href="#cdf">cdf</a></li>
     <li><a href="#expectation">Expectation E(X)</a></li>
     <li><a href="#variance">Variance Var(X)</a></li>
     <li><a href="#linearity">Linearity rules</a></li>
     <li><a href="#recipe">Problem recipe</a></li>
-    <li><a href="#examples">Worked examples</a></li>
+    <li><a href="#examples">Worked examples (discrete)</a></li>
+    <li><a href="#continuous">3.3 Continuous r.v.</a></li>
+    <li><a href="#distributions">3.4 Distributions</a></li>
+    <li><a href="#chebyshev">Chebyshev's inequality</a></li>
+    <li><a href="#mgf">3.5 MGF</a></li>
     <li><a href="#pitfalls">Pitfalls</a></li>
   </ul>
 </aside>
 
 <div>
 
-<h1>Chapter 3 — Random Variables (3.1–3.2)</h1>
-<p class="lede">Translating outcomes into numbers. Discrete random variables, their distributions, means and variances — and the linearity rules that make computations painless.</p>
+<h1>Chapter 3 — Random Variables (3.1–3.5)</h1>
+<p class="lede">Translating outcomes into numbers. Discrete <em>and</em> continuous random variables, the named distributions (binomial, Poisson, normal, exponential), Chebyshev's inequality, and moment generating functions.</p>
 
 <!-- ======== RV ======== -->
 <section class="section" id="rv">
@@ -111,6 +117,53 @@
     $X$ = sum of two fair dice. Possible values 2 to 12.
     $$p(x) = \frac{6 - |x - 7|}{36}, \quad x = 2, \ldots, 12$$
     So $p(2) = p(12) = 1/36$, ..., $p(7) = 6/36$. The pmf is symmetric about 7.
+
+    <div class="visual">
+      <svg viewBox="0 0 600 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="pmf of sum of two dice">
+        <!-- axes -->
+        <line x1="50" y1="220" x2="580" y2="220" stroke="currentColor" stroke-width="1.5"/>
+        <line x1="50" y1="30" x2="50" y2="220" stroke="currentColor" stroke-width="1.5"/>
+        <text x="590" y="235" font-size="11" fill="currentColor" text-anchor="end">x</text>
+        <text x="40" y="30" font-size="11" fill="currentColor" text-anchor="end">p(x)</text>
+        <!-- y-axis ticks at 1/36 2/36 ... 6/36 -->
+        <!-- 220 - (k/6)*180, so k=1 → 190, k=2 → 160, ..., k=6 → 40 -->
+        <g font-size="10" fill="currentColor" text-anchor="end">
+          <line x1="45" y1="190" x2="50" y2="190" stroke="currentColor"/><text x="42" y="194">1/36</text>
+          <line x1="45" y1="160" x2="50" y2="160" stroke="currentColor"/><text x="42" y="164">2/36</text>
+          <line x1="45" y1="130" x2="50" y2="130" stroke="currentColor"/><text x="42" y="134">3/36</text>
+          <line x1="45" y1="100" x2="50" y2="100" stroke="currentColor"/><text x="42" y="104">4/36</text>
+          <line x1="45" y1="70" x2="50" y2="70" stroke="currentColor"/><text x="42" y="74">5/36</text>
+          <line x1="45" y1="40" x2="50" y2="40" stroke="currentColor"/><text x="42" y="44">6/36</text>
+        </g>
+        <!-- stems for x=2..12 at x-coordinates: evenly spaced from 90 to 540 -->
+        <!-- values 1,2,3,4,5,6,5,4,3,2,1 (of 36) -->
+        <g stroke="#2c5282" stroke-width="4" fill="#2c5282">
+          <line x1="90"  y1="220" x2="90"  y2="190"/><circle cx="90"  cy="190" r="5"/>
+          <line x1="135" y1="220" x2="135" y2="160"/><circle cx="135" cy="160" r="5"/>
+          <line x1="180" y1="220" x2="180" y2="130"/><circle cx="180" cy="130" r="5"/>
+          <line x1="225" y1="220" x2="225" y2="100"/><circle cx="225" cy="100" r="5"/>
+          <line x1="270" y1="220" x2="270" y2="70"/><circle cx="270" cy="70" r="5"/>
+          <line x1="315" y1="220" x2="315" y2="40"/><circle cx="315" cy="40" r="5"/>
+          <line x1="360" y1="220" x2="360" y2="70"/><circle cx="360" cy="70" r="5"/>
+          <line x1="405" y1="220" x2="405" y2="100"/><circle cx="405" cy="100" r="5"/>
+          <line x1="450" y1="220" x2="450" y2="130"/><circle cx="450" cy="130" r="5"/>
+          <line x1="495" y1="220" x2="495" y2="160"/><circle cx="495" cy="160" r="5"/>
+          <line x1="540" y1="220" x2="540" y2="190"/><circle cx="540" cy="190" r="5"/>
+        </g>
+        <!-- x-axis labels -->
+        <g font-size="11" fill="currentColor" text-anchor="middle">
+          <text x="90"  y="238">2</text><text x="135" y="238">3</text><text x="180" y="238">4</text>
+          <text x="225" y="238">5</text><text x="270" y="238">6</text>
+          <text x="315" y="238" font-weight="bold">7</text>
+          <text x="360" y="238">8</text><text x="405" y="238">9</text><text x="450" y="238">10</text>
+          <text x="495" y="238">11</text><text x="540" y="238">12</text>
+        </g>
+        <!-- mean marker -->
+        <line x1="315" y1="30" x2="315" y2="220" stroke="#c53030" stroke-width="1" stroke-dasharray="4,3"/>
+        <text x="320" y="25" font-size="10" fill="#c53030">E(X) = 7</text>
+      </svg>
+      <div class="caption">pmf of the sum of two fair dice. Symmetric about 7, which is also the mean.</div>
+    </div>
   </div>
 </section>
 
@@ -354,6 +407,305 @@
     <strong>Shortcut:</strong> let $X_1, X_2$ be the two commissions. $X = X_1 + X_2$ and
     $$E(X) = E(X_1) + E(X_2) = 700 + 600 = \$1300$$
     No need to find the full joint distribution. (Linearity of expectation doesn't need independence anyway.)
+  </div>
+</section>
+
+<!-- ======== 3.3 CONTINUOUS ======== -->
+<section class="section" id="continuous">
+  <h2 style="margin-top:0">3.3 Continuous random variables</h2>
+
+  <p>A r.v. is <strong>continuous</strong> if its range is an interval of ℝ (e.g. $[0, \infty)$ or $\mathbb{R}$) and it is described by a probability density function (pdf) rather than a pmf.</p>
+
+  <div class="definition">
+    <span class="label">Probability density function (pdf)</span>
+    A function $f(x)$ with:
+    <ol>
+      <li>$f(x) \ge 0$ for all $x \in \mathbb{R}$</li>
+      <li>$\displaystyle \int_{-\infty}^{\infty} f(x)\, dx = 1$</li>
+    </ol>
+    Probability of an interval:
+    $$P(a \le X \le b) = \int_a^b f(x)\, dx$$
+  </div>
+
+  <div class="pitfall">
+    <span class="label">Big difference from discrete</span>
+    For a continuous r.v., $P(X = x) = 0$ for every single $x$. So $<$ and $\le$ give the <mark class="hl">same</mark> probability — the endpoint distinction doesn't matter:
+    $$P(a \le X \le b) = P(a < X < b) = P(a < X \le b)$$
+    Density $f(x)$ is NOT a probability — it can exceed 1. Only its integral is a probability.
+  </div>
+
+  <h3>Cumulative distribution function (cdf)</h3>
+  <div class="definition">
+    <span class="label">cdf for continuous r.v.</span>
+    $$F(x) = P(X \le x) = \int_{-\infty}^{x} f(t)\, dt$$
+    This $F$ is <strong>continuous</strong> (no jumps). And the pdf is recovered as the derivative:
+    $$f(x) = F'(x) \quad \text{wherever } F \text{ is differentiable}$$
+  </div>
+
+  <p>For any $a < b$: $P(a < X \le b) = F(b) - F(a)$ (same formula as discrete).</p>
+
+  <h3>Expectation and variance</h3>
+  <div class="definition">
+    <span class="label">Continuous versions</span>
+    $$E(X) = \int_{-\infty}^{\infty} x\, f(x)\, dx, \qquad E[g(X)] = \int_{-\infty}^{\infty} g(x)\, f(x)\, dx$$
+    $$\mathrm{Var}(X) = E(X^2) - [E(X)]^2 = \int_{-\infty}^{\infty} (x - \mu)^2 f(x)\, dx$$
+  </div>
+
+  <div class="key-points">
+    <h4>Everything else is the same</h4>
+    All the linearity rules from the discrete case carry over unchanged:
+    <ul style="margin-bottom:0">
+      <li>$E(aX + b) = aE(X) + b$</li>
+      <li>$E(X + Y) = E(X) + E(Y)$ (always)</li>
+      <li>$\mathrm{Var}(aX + b) = a^2 \mathrm{Var}(X)$</li>
+      <li>$\mathrm{Var}(X + Y) = \mathrm{Var}(X) + \mathrm{Var}(Y)$ for independent $X, Y$</li>
+    </ul>
+  </div>
+
+  <div class="example">
+    <span class="label">Worked example — finding a constant</span>
+    $f(x) = cx^2$ for $0 \le x \le 1$, 0 otherwise. Find $c$, $E(X)$, $\mathrm{Var}(X)$.
+    <ul>
+      <li>Normalize: $\int_0^1 c x^2 \, dx = c/3 = 1 \Rightarrow c = 3$</li>
+      <li>$E(X) = \int_0^1 x \cdot 3x^2 \, dx = \int_0^1 3x^3 \, dx = 3/4$</li>
+      <li>$E(X^2) = \int_0^1 x^2 \cdot 3x^2 \, dx = 3/5$</li>
+      <li>$\mathrm{Var}(X) = 3/5 - (3/4)^2 = 3/5 - 9/16 = 48/80 - 45/80 = 3/80$</li>
+    </ul>
+  </div>
+
+  <div class="example">
+    <span class="label">Worked example — pdf to cdf</span>
+    $f(x) = 2x$ for $0 \le x \le 1$. Find $F(x)$ and $P(0.3 < X \le 0.7)$.
+    <ul>
+      <li>For $0 \le x \le 1$: $F(x) = \int_0^x 2t\, dt = x^2$</li>
+      <li>$F(x) = 0$ for $x < 0$; $F(x) = 1$ for $x > 1$</li>
+      <li>$P(0.3 < X \le 0.7) = F(0.7) - F(0.3) = 0.49 - 0.09 = 0.40$</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ======== 3.4 DISTRIBUTIONS ======== -->
+<section class="section" id="distributions">
+  <h2 style="margin-top:0">3.4 Some probability distributions</h2>
+
+  <p>Named families you'll see repeatedly. Full reference with MGFs on the <a href="distributions.html">distributions page</a>.</p>
+
+  <h3>Discrete distributions</h3>
+
+  <h4>Binomial(n, p) — $n$ independent trials</h4>
+  <div class="definition">
+    <span class="label">Formulas</span>
+    $$p(k) = \binom{n}{k} p^k (1-p)^{n-k}, \quad k = 0, 1, \ldots, n$$
+    $$E(X) = np, \qquad \mathrm{Var}(X) = np(1-p)$$
+  </div>
+  <p><strong>Use when:</strong> fixed number of independent trials, same probability $p$ of success each time, with replacement. Count the successes.</p>
+
+  <div class="example">
+    <span class="label">Example — quality control</span>
+    Items are 5% defective. In a batch of 100, probability of 10+ defectives:
+    $$P(D \ge 10) = 1 - \sum_{k=0}^{9} \binom{100}{k}(0.05)^k(0.95)^{100-k} \approx 0.0282$$
+    This is the computation behind the opening Chapter 0 example.
+  </div>
+
+  <h4>Hypergeometric(N, K, n) — sampling without replacement</h4>
+  <div class="definition">
+    <span class="label">Formulas</span>
+    $$p(k) = \frac{\binom{K}{k}\binom{N-K}{n-k}}{\binom{N}{n}}$$
+    $$E(X) = n \cdot \frac{K}{N}, \qquad \mathrm{Var}(X) = n \cdot \frac{K}{N} \cdot \frac{N-K}{N} \cdot \frac{N-n}{N-1}$$
+  </div>
+  <p><strong>Use when:</strong> drawing without replacement from a finite population of $N$ items, $K$ of which are "successes".</p>
+
+  <div class="key-points">
+    <h4>Binomial vs Hypergeometric — the one-question rule</h4>
+    <strong>With replacement?</strong> Binomial. &nbsp; <strong>Without?</strong> Hypergeometric.
+    <br>If $n/N < 0.05$, hypergeometric ≈ Binomial$(n, K/N)$.
+  </div>
+
+  <h4>Poisson(λ) — rare events</h4>
+  <div class="definition">
+    <span class="label">Formulas</span>
+    $$p(k) = \frac{e^{-\lambda} \lambda^k}{k!}, \quad k = 0, 1, 2, \ldots$$
+    $$E(X) = \lambda, \qquad \mathrm{Var}(X) = \lambda$$
+  </div>
+  <p><strong>Use when:</strong> counting events in a fixed interval (time, space) with constant average rate $\lambda$ and independent occurrences. Phone calls per hour, typos per page.</p>
+  <p><strong>Mean = variance</strong> is the Poisson fingerprint.</p>
+
+  <div class="example">
+    <span class="label">Example — hotline</span>
+    A hotline gets 3 calls per hour on average. $P(\text{exactly 5 calls next hour})$:
+    $$P(X = 5) = \frac{e^{-3} \cdot 3^5}{5!} = \frac{e^{-3} \cdot 243}{120} \approx 0.1008$$
+  </div>
+
+  <h3>Continuous distributions</h3>
+
+  <h4>Uniform [a, b]</h4>
+  <div class="definition">
+    <span class="label">Formulas</span>
+    $$f(x) = \frac{1}{b-a}, \quad a \le x \le b$$
+    $$E(X) = \frac{a+b}{2}, \qquad \mathrm{Var}(X) = \frac{(b-a)^2}{12}$$
+  </div>
+  <p><strong>Use when:</strong> every value in $[a, b]$ is equally likely. Spinner, random number in an interval.</p>
+
+  <h4>Exponential(θ)</h4>
+  <div class="definition">
+    <span class="label">Formulas (parameterization by mean θ)</span>
+    $$f(x) = \frac{1}{\theta} e^{-x/\theta}, \quad x \ge 0$$
+    $$F(x) = 1 - e^{-x/\theta}$$
+    $$E(X) = \theta, \qquad \mathrm{Var}(X) = \theta^2$$
+  </div>
+  <p><strong>Use when:</strong> modeling waiting times, lifetimes, time between Poisson events.</p>
+
+  <div class="key-points">
+    <h4>Memoryless property</h4>
+    $$P(X > s + t \mid X > s) = P(X > t)$$
+    "The lightbulb has lasted $s$ hours; the probability it lasts another $t$ hours is the same as a brand new bulb lasting $t$ hours." The exponential is the <em>only</em> continuous distribution with this property. (Geometric is the only discrete one.)
+  </div>
+
+  <h4>Normal(μ, σ²) — the bell curve</h4>
+  <div class="definition">
+    <span class="label">Formulas</span>
+    $$f(x) = \frac{1}{\sigma \sqrt{2\pi}} \exp\!\left(-\frac{(x - \mu)^2}{2\sigma^2}\right)$$
+    $$E(X) = \mu, \qquad \mathrm{Var}(X) = \sigma^2$$
+  </div>
+  <p><strong>Use when:</strong> measurement data, test scores, sample means (via CLT), many natural phenomena.</p>
+
+  <div class="key-points">
+    <h4>Standardization — the one trick for all normal problems</h4>
+    If $X \sim N(\mu, \sigma^2)$, then
+    $$Z = \frac{X - \mu}{\sigma} \sim N(0, 1)$$
+    Then look up $P(Z \le z) = \Phi(z)$ in the standard normal table (given on the exam).
+    $$P(a \le X \le b) = \Phi\!\left(\frac{b - \mu}{\sigma}\right) - \Phi\!\left(\frac{a - \mu}{\sigma}\right)$$
+  </div>
+
+  <div class="example">
+    <span class="label">Example — standardization</span>
+    $X \sim N(100, 25)$ (so $\mu = 100$, $\sigma = 5$). Find $P(95 \le X \le 110)$.
+    <ul>
+      <li>$P(95 \le X) \to Z_1 = (95-100)/5 = -1$</li>
+      <li>$P(X \le 110) \to Z_2 = (110-100)/5 = 2$</li>
+      <li>$P(-1 \le Z \le 2) = \Phi(2) - \Phi(-1) = 0.9772 - 0.1587 = 0.8185$</li>
+    </ul>
+  </div>
+
+  <div class="key-points">
+    <h4>68–95–99.7 rule</h4>
+    For a normal distribution:
+    <ul>
+      <li>~68% of mass within $\mu \pm \sigma$</li>
+      <li>~95% within $\mu \pm 2\sigma$</li>
+      <li>~99.7% within $\mu \pm 3\sigma$</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ======== CHEBYSHEV ======== -->
+<section class="section" id="chebyshev">
+  <h2 style="margin-top:0">Chebyshev's inequality — works for any distribution</h2>
+
+  <div class="definition">
+    <span class="label">Chebyshev's inequality</span>
+    For any random variable $X$ with finite mean $\mu$ and variance $\sigma^2$, and any $k > 0$:
+    $$P(|X - \mu| \ge k\sigma) \le \frac{1}{k^2}$$
+    Equivalently:
+    $$P(|X - \mu| < k\sigma) \ge 1 - \frac{1}{k^2}$$
+  </div>
+
+  <div class="key-points">
+    <h4>Why it's useful</h4>
+    It makes <strong>no assumption</strong> about the distribution — only requires finite mean and variance. Gives a universal bound. For a normal distribution the bound is loose (normal has ~95% within 2σ, Chebyshev only guarantees 75%), but it works for weird shapes too.
+  </div>
+
+  <table>
+    <thead><tr><th>$k$</th><th>Chebyshev bound $1 - 1/k^2$</th><th>Normal distribution (reality)</th></tr></thead>
+    <tbody>
+      <tr><td>$k = 1$</td><td>$\ge 0$ (no information)</td><td>~68%</td></tr>
+      <tr><td>$k = 2$</td><td>$\ge 0.75$</td><td>~95%</td></tr>
+      <tr><td>$k = 3$</td><td>$\ge 0.889$</td><td>~99.7%</td></tr>
+      <tr><td>$k = 4$</td><td>$\ge 0.9375$</td><td>~99.99%</td></tr>
+    </tbody>
+  </table>
+
+  <div class="example">
+    <span class="label">Example</span>
+    $X$ has $\mu = 50$, $\sigma = 10$. Give a lower bound on $P(30 < X < 70)$.
+    <ul>
+      <li>$30 < X < 70$ means $|X - 50| < 20 = 2\sigma$, so $k = 2$.</li>
+      <li>$P(|X - 50| < 2\sigma) \ge 1 - 1/4 = 0.75$.</li>
+    </ul>
+    So at least 75% probability — regardless of the shape of the distribution.
+  </div>
+</section>
+
+<!-- ======== 3.5 MGF ======== -->
+<section class="section" id="mgf">
+  <h2 style="margin-top:0">3.5 Moment generating function (MGF)</h2>
+
+  <div class="definition">
+    <span class="label">Definition</span>
+    The <strong>MGF</strong> of a random variable $X$ is
+    $$M_X(t) = E(e^{tX})$$
+    defined for all $t$ in a neighborhood of 0.
+    <ul>
+      <li>Discrete: $M_X(t) = \sum_x e^{tx} p(x)$</li>
+      <li>Continuous: $M_X(t) = \int_{-\infty}^{\infty} e^{tx} f(x)\, dx$</li>
+    </ul>
+  </div>
+
+  <div class="key-points">
+    <h4>Three powers of the MGF</h4>
+    <ol>
+      <li><strong>Generates moments:</strong> $E(X^n) = M_X^{(n)}(0)$ (the $n$-th derivative at $t = 0$).
+        <ul>
+          <li>$E(X) = M'(0)$</li>
+          <li>$E(X^2) = M''(0)$, so $\mathrm{Var}(X) = M''(0) - [M'(0)]^2$</li>
+        </ul>
+      </li>
+      <li><strong>Uniquely determines the distribution.</strong> If $M_X = M_Y$ near 0, then $X$ and $Y$ have the same distribution. Useful for identifying distributions and proving sums.</li>
+      <li><strong>Plays well with sums.</strong> For independent $X, Y$: $M_{X+Y}(t) = M_X(t) \cdot M_Y(t)$.</li>
+    </ol>
+    <p style="margin-top:12px"><strong>Linear transformation:</strong> $M_{aX + b}(t) = e^{bt} M_X(at)$.</p>
+  </div>
+
+  <h3>Common MGFs</h3>
+  <table>
+    <thead><tr><th>Distribution</th><th>MGF</th></tr></thead>
+    <tbody>
+      <tr><td>Bernoulli(p)</td><td>$1 - p + pe^t$</td></tr>
+      <tr><td>Binomial(n, p)</td><td>$(1 - p + pe^t)^n$</td></tr>
+      <tr><td>Geometric(p)</td><td>$\dfrac{pe^t}{1 - (1-p)e^t}$</td></tr>
+      <tr><td>Poisson(λ)</td><td>$e^{\lambda(e^t - 1)}$</td></tr>
+      <tr><td>Uniform [a, b]</td><td>$\dfrac{e^{bt} - e^{at}}{t(b-a)}$</td></tr>
+      <tr><td>Exponential(θ)</td><td>$\dfrac{1}{1 - \theta t}$ &nbsp;(for $t < 1/\theta$)</td></tr>
+      <tr><td>Normal(μ, σ²)</td><td>$\exp\!\left(\mu t + \dfrac{\sigma^2 t^2}{2}\right)$</td></tr>
+    </tbody>
+  </table>
+
+  <div class="example">
+    <span class="label">Worked — moments of Poisson from MGF</span>
+    $M(t) = e^{\lambda(e^t - 1)}$.
+    <ul>
+      <li>$M'(t) = \lambda e^t \cdot M(t)$, so $M'(0) = \lambda \cdot 1 = \lambda$. Hence $E(X) = \lambda$. ✓</li>
+      <li>$M''(t) = \lambda e^t \cdot M(t) + \lambda e^t \cdot \lambda e^t \cdot M(t) = \lambda e^t M(t) [1 + \lambda e^t]$</li>
+      <li>$M''(0) = \lambda(1 + \lambda) = \lambda + \lambda^2 = E(X^2)$</li>
+      <li>$\mathrm{Var}(X) = (\lambda + \lambda^2) - \lambda^2 = \lambda$ ✓</li>
+    </ul>
+  </div>
+
+  <div class="example">
+    <span class="label">Worked — sum of independent normals is normal</span>
+    If $X_1 \sim N(\mu_1, \sigma_1^2)$ and $X_2 \sim N(\mu_2, \sigma_2^2)$ independent:
+    $$M_{X_1 + X_2}(t) = M_{X_1}(t) \cdot M_{X_2}(t) = \exp\!\left(\mu_1 t + \tfrac{\sigma_1^2 t^2}{2}\right) \exp\!\left(\mu_2 t + \tfrac{\sigma_2^2 t^2}{2}\right)$$
+    $$= \exp\!\left((\mu_1 + \mu_2) t + \tfrac{(\sigma_1^2 + \sigma_2^2) t^2}{2}\right)$$
+    which is the MGF of $N(\mu_1 + \mu_2, \sigma_1^2 + \sigma_2^2)$. By uniqueness, $X_1 + X_2 \sim N(\mu_1 + \mu_2, \sigma_1^2 + \sigma_2^2)$.
+  </div>
+
+  <div class="pitfall">
+    <span class="label">Common MGF traps</span>
+    <ul style="margin-bottom:0">
+      <li>Multiplication of MGFs for sums requires <strong>independence</strong>.</li>
+      <li>$M(0) = 1$ always — if your MGF at 0 is not 1, you made an error.</li>
+      <li>The MGF may not exist (not every distribution has one). But all the named distributions above do.</li>
+    </ul>
   </div>
 </section>
 

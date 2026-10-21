@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tips &amp; tricks — MATH 2411</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💡</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Newsreader:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+<script>
+  MathJax = { tex: { inlineMath: [['$','$'],['\\(','\\)']] } };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+</head>
+<body>
+
+<header class="top">
+  <div class="top-inner">
+    <div class="brand">MATH 2411 Midterm<small>HKUST · Fall 2026</small></div>
+    <nav class="chapternav">
+      <a href="index.html">Overview</a>
+      <a href="chapter1.html">Ch 1</a>
+      <a href="chapter2.html">Ch 2</a>
+      <a href="chapter3.html">Ch 3</a>
+      <a href="formulas.html">Formulas</a>
+      <a href="tips.html" class="active">Tips</a>
+      <a href="distributions.html">Distributions</a>
+      <a href="quiz.html">Quiz</a>
+      <a href="true-false.html">T/F</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+<div class="chapter-layout">
+<aside class="chapter-sidebar">
+  <h4>Jump to</h4>
+  <ul>
+    <li><a href="#bayes">Bayes' theorem tips</a></li>
+    <li><a href="#atleast">"At least one" trick</a></li>
+    <li><a href="#counting">Permutation vs combination</a></li>
+    <li><a href="#hyper-vs-binom">Hypergeometric vs binomial</a></li>
+    <li><a href="#independence">Independent vs disjoint</a></li>
+    <li><a href="#variance">E and Var shortcuts</a></li>
+    <li><a href="#endpoints">&lt; vs ≤ for discrete r.v.</a></li>
+    <li><a href="#quartiles">Quartiles (np + 0.5)</a></li>
+    <li><a href="#outliers">Boxplot outliers</a></li>
+    <li><a href="#exam">Exam strategy</a></li>
+  </ul>
+</aside>
+
+<div>
+
+<h1>Tips &amp; tricks — pattern recognition cheat sheet</h1>
+<p class="lede">For each problem type, how to recognize it and the shortcut to use. If you only remember the pattern, the formula follows.</p>
+
+<!-- BAYES -->
+<section class="section" id="bayes">
+  <h2 style="margin-top:0">Bayes' theorem — how to spot it</h2>
+
+  <div class="key-points">
+    <h4>Signal words that scream Bayes</h4>
+    <ul>
+      <li>"Given that the result is positive / defective / observed, what is the probability it came from…"</li>
+      <li>"Posterior probability of…"</li>
+      <li>Any question that <em>reverses</em> the direction of a conditional probability.</li>
+      <li>You know $P(\text{evidence} \mid \text{cause})$ but want $P(\text{cause} \mid \text{evidence})$.</li>
+    </ul>
+  </div>
+
+  <h3>The 3-step method</h3>
+  <ol>
+    <li><strong>Identify the partition.</strong> What are the mutually exclusive, exhaustive "causes" $B_1, \ldots, B_n$? (The three machines, the two bags, infected vs healthy, car behind each door...)</li>
+    <li><strong>Label the branches:</strong> prior $P(B_i)$ on the first branch, likelihood $P(A \mid B_i)$ on the second.</li>
+    <li><strong>Compute:</strong>
+      $$P(B_j \mid A) = \frac{P(A \mid B_j) P(B_j)}{\sum_i P(A \mid B_i) P(B_i)}$$
+      Numerator = the one path through $B_j$. Denominator = sum of all paths to $A$.
+    </li>
+  </ol>
+
+  <div class="example">
+    <span class="label">Shortcut recognition</span>
+    <ul style="margin-bottom:0">
+      <li><strong>Medical/diagnostic test:</strong> prior = prevalence, likelihood = sensitivity/specificity. The low prevalence is why the "base-rate fallacy" strikes.</li>
+      <li><strong>Three machines (defectives):</strong> prior = production share, likelihood = defect rate. Posterior tells you which machine was the likely source.</li>
+      <li><strong>Monty Hall:</strong> prior = $1/3$ for each door, likelihood depends on which door the host opens.</li>
+    </ul>
+  </div>
+
+  <div class="pitfall">
+    <span class="label">Don't confuse $P(A \mid B)$ with $P(B \mid A)$</span>
+    These are generally very different. In the HIV example $P(\text{test}+\mid \text{sick}) = 0.95$ but $P(\text{sick}\mid \text{test}+) \approx 0.004$. Always ask: "what's being conditioned on?"
+  </div>
+</section>
+
+<!-- AT LEAST ONE -->
+<section class="section" id="atleast">
+  <h2 style="margin-top:0">The "at least one" trick</h2>
+
+  <div class="key-points">
+    <h4>Signal: words "at least", "at least one", "not all", "some"</h4>
+    Compute the <strong>complement</strong>. It is almost always easier.
+    $$P(\text{at least one}) = 1 - P(\text{none})$$
+    $$P(\text{at least two}) = 1 - P(0 \text{ or } 1)$$
+  </div>
+
+  <div class="example">
+    <span class="label">Classic examples</span>
+    <ul style="margin-bottom:0">
+      <li><strong>Birthday problem:</strong> $P(\text{some share}) = 1 - \frac{365!/(365-n)!}{365^n}$</li>
+      <li><strong>Rolls of a die until first 6:</strong> $P(\text{at least one 6 in }n\text{ rolls}) = 1 - (5/6)^n$</li>
+      <li><strong>n independent trials, success prob p:</strong> $P(\text{at least one success}) = 1 - (1-p)^n$</li>
+    </ul>
+  </div>
+</section>
+
+<!-- COUNTING -->
+<section class="section" id="counting">
+  <h2 style="margin-top:0">Permutation vs combination — decision tree</h2>
+
+  <div class="key-points">
+    <h4>Ask yourself in order:</h4>
+    <ol>
+      <li><strong>Does order matter?</strong>
+        <ul>
+          <li>Yes → permutation ($n!/(n-r)!$)</li>
+          <li>No → combination ($\binom{n}{r}$)</li>
+        </ul>
+      </li>
+      <li><strong>Are you dividing into groups?</strong> Partition / multinomial: $\dfrac{n!}{n_1!\,n_2!\cdots n_k!}$</li>
+      <li><strong>Objects in a circle?</strong> Divide by rotations: $(n-1)!$</li>
+      <li><strong>Letters with repeats?</strong> Same as partition: divide by factorials of repeat counts.</li>
+    </ul>
+  </div>
+
+  <h3>Translation table</h3>
+  <table>
+    <thead><tr><th>Problem says…</th><th>Use…</th></tr></thead>
+    <tbody>
+      <tr><td>"president and vice-president"</td><td>Permutation (different roles → order matters)</td></tr>
+      <tr><td>"a committee of 5"</td><td>Combination (members have no order)</td></tr>
+      <tr><td>"a hand of 5 cards"</td><td>Combination</td></tr>
+      <tr><td>"arrange books on a shelf"</td><td>Permutation</td></tr>
+      <tr><td>"seat around a round table"</td><td>Circular, $(n-1)!$</td></tr>
+      <tr><td>"split into a triple and two doubles"</td><td>Partition / multinomial</td></tr>
+      <tr><td>"arrange letters MISSISSIPPI"</td><td>$\dfrac{11!}{4!\,4!\,2!}$ (multinomial for repeats)</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- HYPER VS BINOM -->
+<section class="section" id="hyper-vs-binom">
+  <h2 style="margin-top:0">Hypergeometric vs binomial — one question</h2>
+
+  <div class="key-points">
+    <h4>With or without replacement?</h4>
+    <ul>
+      <li><strong>With replacement</strong> (or independent trials) → <strong>binomial</strong>. Each trial has the same probability $p$.</li>
+      <li><strong>Without replacement</strong> (sampling from finite population) → <strong>hypergeometric</strong>. The population composition changes.</li>
+    </ul>
+  </div>
+
+  <table>
+    <thead><tr><th></th><th>Binomial</th><th>Hypergeometric</th></tr></thead>
+    <tbody>
+      <tr><td>pmf</td><td>$\binom{n}{k} p^k (1-p)^{n-k}$</td><td>$\dfrac{\binom{K}{k}\binom{N-K}{n-k}}{\binom{N}{n}}$</td></tr>
+      <tr><td>Mean</td><td>$np$</td><td>$n \cdot \tfrac{K}{N}$</td></tr>
+      <tr><td>When</td><td>Flipping a coin, rolling dice, with replacement</td><td>Drawing from a box, lottery, poker hands</td></tr>
+    </tbody>
+  </table>
+
+  <p><strong>Rule of thumb:</strong> if $n$ is small compared to $N$ (say $n/N < 0.05$), the hypergeometric is well-approximated by binomial with $p = K/N$.</p>
+</section>
+
+<!-- INDEPENDENCE -->
+<section class="section" id="independence">
+  <h2 style="margin-top:0">Independent vs disjoint — nearly opposites</h2>
+
+  <div class="pitfall">
+    <span class="label">Common trap</span>
+    "A and B are mutually exclusive, so they're independent." <mark class="hl">False.</mark> If $P(A), P(B) > 0$ and A, B are disjoint, then knowing A happened tells you B did <em>not</em> happen — that's maximum dependence.
+  </div>
+
+  <table>
+    <thead><tr><th></th><th>Disjoint</th><th>Independent</th></tr></thead>
+    <tbody>
+      <tr><td>Definition</td><td>$A \cap B = \emptyset$</td><td>$P(A \cap B) = P(A)P(B)$</td></tr>
+      <tr><td>$P(A \cap B)$</td><td>0</td><td>$P(A) \cdot P(B)$</td></tr>
+      <tr><td>$P(A \mid B)$</td><td>0</td><td>$P(A)$</td></tr>
+      <tr><td>Addition rule</td><td>$P(A) + P(B)$</td><td>$P(A) + P(B) - P(A)P(B)$</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- VARIANCE -->
+<section class="section" id="variance">
+  <h2 style="margin-top:0">Expectation and variance shortcuts</h2>
+
+  <div class="key-points">
+    <h4>Expectation (always true, no independence needed)</h4>
+    <ul>
+      <li>$E(aX + b) = aE(X) + b$</li>
+      <li>$E(X + Y) = E(X) + E(Y)$ (linearity)</li>
+      <li>$E[g(X)] = \sum g(x) p(x)$ — don't find the distribution of $g(X)$, just plug in</li>
+      <li>Indicator: $E(I_A) = P(A)$. Counts = sums of indicators!</li>
+    </ul>
+  </div>
+
+  <div class="key-points">
+    <h4>Variance</h4>
+    <ul>
+      <li><strong>Use the computational formula:</strong> $\mathrm{Var}(X) = E(X^2) - [E(X)]^2$ (always faster than the definition)</li>
+      <li>$\mathrm{Var}(aX + b) = a^2 \mathrm{Var}(X)$ — shift drops, scale squares</li>
+      <li>$\mathrm{Var}(X + Y) = \mathrm{Var}(X) + \mathrm{Var}(Y)$ <strong>only if independent</strong></li>
+      <li>$\mathrm{Var}(X - Y) = \mathrm{Var}(X) + \mathrm{Var}(Y)$ (plus, not minus!)</li>
+      <li>Indicator: $\mathrm{Var}(I_A) = P(A)(1 - P(A))$</li>
+      <li>Sanity check: variance is always $\ge 0$</li>
+    </ul>
+  </div>
+
+  <div class="example">
+    <span class="label">The indicator sum shortcut</span>
+    "Toss a coin $n$ times. Find $E$ and $\mathrm{Var}$ of the number of heads." <br>
+    Let $X = I_1 + I_2 + \cdots + I_n$. Then <strong>without any pmf</strong>:
+    $$E(X) = n \cdot \tfrac{1}{2}, \quad \mathrm{Var}(X) = n \cdot \tfrac{1}{2} \cdot \tfrac{1}{2}$$
+    This generalizes: any binomial has $E = np$ and $\mathrm{Var} = np(1-p)$.
+  </div>
+</section>
+
+<!-- ENDPOINTS -->
+<section class="section" id="endpoints">
+  <h2 style="margin-top:0">&lt; vs ≤ for discrete random variables</h2>
+
+  <div class="pitfall">
+    <span class="label">Critical trap</span>
+    For a discrete r.v., strict vs non-strict inequality <mark class="hl">matters</mark> whenever the endpoint is a possible value.
+    <ul>
+      <li>$P(X < 3) = P(X \le 3) - p(3)$</li>
+      <li>$P(X \ge 3) = P(X > 3) + p(3) = 1 - F(3) + p(3)$</li>
+    </ul>
+  </div>
+
+  <h3>The cdf cheat sheet</h3>
+  <table>
+    <thead><tr><th>Probability</th><th>In terms of F and p</th></tr></thead>
+    <tbody>
+      <tr><td>$P(X \le b)$</td><td>$F(b)$</td></tr>
+      <tr><td>$P(X < b)$</td><td>$F(b) - p(b)$</td></tr>
+      <tr><td>$P(X > a)$</td><td>$1 - F(a)$</td></tr>
+      <tr><td>$P(X \ge a)$</td><td>$1 - F(a) + p(a)$</td></tr>
+      <tr><td>$P(a < X \le b)$</td><td>$F(b) - F(a)$</td></tr>
+      <tr><td>$P(a \le X \le b)$</td><td>$F(b) - F(a) + p(a)$</td></tr>
+      <tr><td>$P(a < X < b)$</td><td>$F(b) - F(a) - p(b)$</td></tr>
+      <tr><td>$P(a \le X < b)$</td><td>$F(b) - F(a) - p(b) + p(a)$</td></tr>
+    </tbody>
+  </table>
+  <p>Mnemonic: <strong>$F(b) - F(a)$ is the "default"</strong>, which equals $P(a < X \le b)$. For every other combination, add or subtract $p$ at the endpoint that moved.</p>
+</section>
+
+<!-- QUARTILES -->
+<section class="section" id="quartiles">
+  <h2 style="margin-top:0">Quartiles — the np + 0.5 rule</h2>
+
+  <div class="key-points">
+    <h4>Mechanical procedure</h4>
+    For $p \in \{0.25, 0.50, 0.75\}$, compute $m^* = np + 0.5$.
+    <ul>
+      <li>If $m^*$ is an integer $m$ → quartile = $m$-th smallest value.</li>
+      <li>If not → quartile = average of $\lfloor m^* \rfloor$-th and $(\lfloor m^* \rfloor + 1)$-th values.</li>
+    </ul>
+  </div>
+
+  <div class="pitfall">
+    <span class="label">Pitfall</span>
+    R's <code>quantile()</code> gives different answers. On the exam use $np + 0.5$ or lose points.
+  </div>
+</section>
+
+<!-- OUTLIERS -->
+<section class="section" id="outliers">
+  <h2 style="margin-top:0">Boxplot outlier rule</h2>
+
+  <div class="key-points">
+    <h4>The 1.5·IQR rule</h4>
+    A point $x$ is an outlier if $x \le Q_1 - 1.5 \cdot IQR$ or $x \ge Q_3 + 1.5 \cdot IQR$.
+    <br>
+    <strong>Note:</strong> $\le$ and $\ge$, not strict. A point exactly on the fence <em>is</em> an outlier.
+  </div>
+
+  <p>In a boxplot, outliers are drawn as separate dots and the whisker stops at the most extreme non-outlier.</p>
+</section>
+
+<!-- EXAM STRATEGY -->
+<section class="section" id="exam">
+  <h2 style="margin-top:0">Exam strategy</h2>
+
+  <ol>
+    <li><strong>Scan the paper first.</strong> Start with the questions worth most points that you know well. Build confidence.</li>
+    <li><strong>For every T/F:</strong> ask "is there any edge case where this breaks?" Even one counterexample makes it false. Classic traps:
+      <ul>
+        <li>"$P(E) \le 1$ is an axiom" — false, it's a consequence</li>
+        <li>"disjoint ⇒ independent" — false</li>
+        <li>"$E(X+Y) = E(X) + E(Y)$ needs independence" — false, linearity is always true</li>
+        <li>"$\mathrm{Var}(X - Y) = \mathrm{Var}(X) - \mathrm{Var}(Y)$" — false, it's a plus</li>
+      </ul>
+    </li>
+    <li><strong>For MC:</strong> compute, then check which option matches. If none, you made an arithmetic error.</li>
+    <li><strong>For long problems:</strong> write what you know. Draw a tree if conditional / Bayes. State the formula before plugging in — makes partial credit easier if you make an arithmetic slip.</li>
+    <li><strong>Sanity checks:</strong>
+      <ul>
+        <li>Probabilities in $[0, 1]$</li>
+        <li>Variances $\ge 0$</li>
+        <li>pmf sums to 1</li>
+        <li>$E(X^2) \ge [E(X)]^2$</li>
+      </ul>
+    </li>
+    <li><strong>Rounding:</strong> exact or 4 decimal places.</li>
+    <li><strong>Last 10 minutes:</strong> re-check every "at least" / complement computation, and re-check every "did order matter" counting question.</li>
+  </ol>
+</section>
+
+</div>
+</div>
+</main>
+
+<footer>Built for the MATH 2411 midterm · HKUST Fall 2026</footer>
+
+</body>
+</html>

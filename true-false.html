@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>True or False — MATH 2411 Midterm</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>✓</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Newsreader:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+<script>
+  MathJax = { tex: { inlineMath: [['$','$'],['\\(','\\)']] } };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+</head>
+<body>
+
+<header class="top">
+  <div class="top-inner">
+    <div class="brand">MATH 2411 Midterm<small>HKUST · Fall 2026</small></div>
+    <nav class="chapternav">
+      <a href="index.html">Overview</a>
+      <a href="chapter1.html">Ch 1</a>
+      <a href="chapter2.html">Ch 2</a>
+      <a href="chapter3.html">Ch 3</a>
+      <a href="formulas.html">Formulas</a>
+      <a href="quiz.html">Quiz</a>
+      <a href="true-false.html" class="active">T/F</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+<h1>True or False</h1>
+<p class="lede">The classic exam traps. Each statement is deliberately phrased to catch common misconceptions. Explanation shown after you answer.</p>
+
+<div class="quiz-head">
+  <div class="filters seg" id="tfilter">
+    <button aria-pressed="true" data-f="all">All</button>
+    <button aria-pressed="false" data-f="1">Ch 1</button>
+    <button aria-pressed="false" data-f="2">Ch 2</button>
+    <button aria-pressed="false" data-f="3">Ch 3</button>
+    <button aria-pressed="false" data-f="open">Unanswered</button>
+    <button aria-pressed="false" data-f="wrong">Only wrong</button>
+  </div>
+  <span class="score" id="tscore"></span>
+  <button class="small-btn" id="reset-tf">Reset</button>
+</div>
+
+<div id="tfquiz"></div>
+
+</main>
+
+<footer>Built for the MATH 2411 midterm · HKUST Fall 2026</footer>
+
+<script src="js/questions.js"></script>
+<script src="js/tf.js"></script>
+</body>
+</html>

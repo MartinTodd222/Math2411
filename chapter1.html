@@ -25,6 +25,8 @@
       <a href="chapter2.html">Ch 2</a>
       <a href="chapter3.html">Ch 3</a>
       <a href="formulas.html">Formulas</a>
+      <a href="quiz.html">Quiz</a>
+      <a href="true-false.html">T/F</a>
     </nav>
   </div>
 </header>
@@ -208,6 +210,44 @@
       <li>$29 \le 53$ and $53 \le 53$ — <strong>both 29 and 53 are flagged as outliers</strong></li>
     </ul>
     The failed Challenger launch at 29°F was a clear outlier.
+
+    <div class="visual">
+      <svg viewBox="0 0 640 160" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Boxplot of Challenger launch temperatures">
+        <!-- axis -->
+        <line x1="40" y1="130" x2="600" y2="130" stroke="currentColor" stroke-width="1.5"/>
+        <!-- tick marks: scale 20°F to 90°F maps to 40-600 -->
+        <!-- 20→40, 90→600, so x = 40 + (t-20) * 560/70 = 40 + (t-20)*8 -->
+        <g font-size="11" text-anchor="middle" fill="currentColor">
+          <line x1="40" y1="130" x2="40" y2="135" stroke="currentColor"/><text x="40" y="150">20</text>
+          <line x1="120" y1="130" x2="120" y2="135" stroke="currentColor"/><text x="120" y="150">30</text>
+          <line x1="200" y1="130" x2="200" y2="135" stroke="currentColor"/><text x="200" y="150">40</text>
+          <line x1="280" y1="130" x2="280" y2="135" stroke="currentColor"/><text x="280" y="150">50</text>
+          <line x1="360" y1="130" x2="360" y2="135" stroke="currentColor"/><text x="360" y="150">60</text>
+          <line x1="440" y1="130" x2="440" y2="135" stroke="currentColor"/><text x="440" y="150">70</text>
+          <line x1="520" y1="130" x2="520" y2="135" stroke="currentColor"/><text x="520" y="150">80</text>
+          <line x1="600" y1="130" x2="600" y2="135" stroke="currentColor"/><text x="600" y="150">90 °F</text>
+        </g>
+        <!-- box: Q1=66.5 → 40+46.5*8=412, Q3=75.5 → 40+55.5*8=484 -->
+        <rect x="412" y="50" width="72" height="50" fill="#e8eff8" stroke="#2c5282" stroke-width="2"/>
+        <!-- median=70 → 40+50*8=440 -->
+        <line x1="440" y1="50" x2="440" y2="100" stroke="#2c5282" stroke-width="3"/>
+        <!-- whiskers: lower non-outlier = 57 → 40+37*8=336, upper non-outlier = 81 → 40+61*8=528 -->
+        <line x1="336" y1="75" x2="412" y2="75" stroke="#2c5282" stroke-width="1.5"/>
+        <line x1="336" y1="60" x2="336" y2="90" stroke="#2c5282" stroke-width="1.5"/>
+        <line x1="484" y1="75" x2="528" y2="75" stroke="#2c5282" stroke-width="1.5"/>
+        <line x1="528" y1="60" x2="528" y2="90" stroke="#2c5282" stroke-width="1.5"/>
+        <!-- outliers: 29 → 40+9*8=112, 53 → 40+33*8=304 -->
+        <circle cx="112" cy="75" r="5" fill="#c53030"/>
+        <circle cx="304" cy="75" r="5" fill="#c53030"/>
+        <text x="112" y="35" text-anchor="middle" font-size="11" fill="#c53030" font-weight="bold">29 (Challenger)</text>
+        <text x="304" y="35" text-anchor="middle" font-size="11" fill="#c53030">53</text>
+        <!-- labels -->
+        <text x="412" y="115" text-anchor="middle" font-size="10" fill="currentColor">Q₁=66.5</text>
+        <text x="440" y="40" text-anchor="middle" font-size="10" fill="currentColor">median=70</text>
+        <text x="484" y="115" text-anchor="middle" font-size="10" fill="currentColor">Q₃=75.5</text>
+      </svg>
+      <div class="caption">Boxplot of Challenger launch temperatures. The 29°F launch is far below the lower fence (53).</div>
+    </div>
   </div>
 
   <div class="example">

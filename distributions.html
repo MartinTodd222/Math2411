@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Distributions &amp; MGF — MATH 2411</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📈</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Newsreader:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+<script>
+  MathJax = { tex: { inlineMath: [['$','$'],['\\(','\\)']] } };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+</head>
+<body>
+
+<header class="top">
+  <div class="top-inner">
+    <div class="brand">MATH 2411 Midterm<small>HKUST · Fall 2026</small></div>
+    <nav class="chapternav">
+      <a href="index.html">Overview</a>
+      <a href="chapter1.html">Ch 1</a>
+      <a href="chapter2.html">Ch 2</a>
+      <a href="chapter3.html">Ch 3</a>
+      <a href="formulas.html">Formulas</a>
+      <a href="tips.html">Tips</a>
+      <a href="distributions.html" class="active">Distributions</a>
+      <a href="quiz.html">Quiz</a>
+      <a href="true-false.html">T/F</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+<div class="chapter-layout">
+<aside class="chapter-sidebar">
+  <h4>Jump to</h4>
+  <ul>
+    <li><a href="#intro">What is MGF?</a></li>
+    <li><a href="#bernoulli">Bernoulli</a></li>
+    <li><a href="#binomial">Binomial</a></li>
+    <li><a href="#geometric">Geometric</a></li>
+    <li><a href="#negbin">Negative Binomial</a></li>
+    <li><a href="#hyper">Hypergeometric</a></li>
+    <li><a href="#poisson">Poisson</a></li>
+    <li><a href="#uniform">Uniform (cont.)</a></li>
+    <li><a href="#expo">Exponential</a></li>
+    <li><a href="#normal">Normal</a></li>
+    <li><a href="#summary">Summary table</a></li>
+    <li><a href="#decision">Which to use?</a></li>
+  </ul>
+</aside>
+
+<div>
+
+<h1>Distributions &amp; moment generating functions</h1>
+<p class="lede">The named families you'll meet in Chapter 3.4 and beyond. Each entry has the pmf/pdf, mean, variance, MGF, and when to use it. Note: distributions and MGF are from Ch 3.4–3.5, officially past the midterm scope, but useful groundwork for the final.</p>
+
+<!-- INTRO MGF -->
+<section class="section" id="intro">
+  <h2 style="margin-top:0">Moment generating function (MGF)</h2>
+
+  <div class="definition">
+    <span class="label">Definition</span>
+    The <strong>moment generating function</strong> of a random variable $X$ is
+    $$M_X(t) = E(e^{tX})$$
+    for all $t$ in some neighborhood of 0.
+    <ul>
+      <li>Discrete: $M_X(t) = \sum_x e^{tx} p(x)$</li>
+      <li>Continuous: $M_X(t) = \int_{-\infty}^{\infty} e^{tx} f(x)\, dx$</li>
+    </ul>
+  </div>
+
+  <div class="key-points">
+    <h4>Why MGFs are useful</h4>
+    <ol>
+      <li><strong>They generate moments.</strong> $E(X^n) = M_X^{(n)}(0)$ (the $n$-th derivative of $M_X$ at 0).
+        <ul>
+          <li>$E(X) = M'(0)$</li>
+          <li>$E(X^2) = M''(0)$, so $\mathrm{Var}(X) = M''(0) - [M'(0)]^2$</li>
+        </ul>
+      </li>
+      <li><strong>They uniquely determine the distribution.</strong> If $M_X = M_Y$ in a neighborhood of 0, then $X$ and $Y$ have the same distribution.</li>
+      <li><strong>They play nicely with sums.</strong> If $X$ and $Y$ are independent, $M_{X+Y}(t) = M_X(t) \cdot M_Y(t)$.</li>
+      <li><strong>Linear transformations:</strong> $M_{aX+b}(t) = e^{bt} M_X(at)$</li>
+    </ol>
+  </div>
+</section>
+
+<!-- BERNOULLI -->
+<section class="section" id="bernoulli">
+  <h2 style="margin-top:0">Bernoulli(p) <small style="color:var(--muted); font-weight: normal">— Jakob Bernoulli, Swiss</small></h2>
+
+  <p><strong>Model:</strong> a single trial with two outcomes — success (prob $p$) or failure (prob $1-p$).</p>
+
+  <table>
+    <tbody>
+      <tr><th>Range</th><td>$\{0, 1\}$</td></tr>
+      <tr><th>pmf</th><td>$p(1) = p$, &nbsp; $p(0) = 1 - p$. Equivalently $p(x) = p^x(1-p)^{1-x}$ for $x \in \{0,1\}$</td></tr>
+      <tr><th>Mean</th><td>$E(X) = p$</td></tr>
+      <tr><th>Variance</th><td>$\mathrm{Var}(X) = p(1-p)$</td></tr>
+      <tr><th>MGF</th><td>$M(t) = (1-p) + p e^t$</td></tr>
+      <tr><th>Use when</th><td>Modeling a single yes/no, success/fail, win/lose event.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="example">
+    <span class="label">Why it matters</span>
+    Bernoulli is the building block. A binomial counts the sum of $n$ independent Bernoullis.
+  </div>
+</section>
+
+<!-- BINOMIAL -->
+<section class="section" id="binomial">
+  <h2 style="margin-top:0">Binomial(n, p)</h2>
+
+  <p><strong>Model:</strong> number of successes in $n$ independent Bernoulli(p) trials.</p>
+
+  <table>
+    <tbody>
+      <tr><th>Range</th><td>$\{0, 1, 2, \ldots, n\}$</td></tr>
+      <tr><th>pmf</th><td>$p(k) = \binom{n}{k} p^k (1-p)^{n-k}$</td></tr>
+      <tr><th>Mean</th><td>$E(X) = np$</td></tr>
+      <tr><th>Variance</th><td>$\mathrm{Var}(X) = np(1-p)$</td></tr>
+      <tr><th>MGF</th><td>$M(t) = [(1-p) + p e^t]^n$</td></tr>
+      <tr><th>Use when</th><td>Counting successes in fixed $n$ independent trials, same $p$ each time, with replacement.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="example">
+    <span class="label">Example</span>
+    Toss a biased coin ($p = 0.3$) 10 times. Probability of exactly 3 heads:
+    $$P(X = 3) = \binom{10}{3}(0.3)^3(0.7)^7 \approx 0.2668$$
+    $E(X) = 10(0.3) = 3$ and $\mathrm{Var}(X) = 10(0.3)(0.7) = 2.1$.
+  </div>
+</section>
+
+<!-- GEOMETRIC -->
+<section class="section" id="geometric">
+  <h2 style="margin-top:0">Geometric(p)</h2>
+
+  <p><strong>Model:</strong> number of trials needed to get the first success.</p>
+
+  <table>
+    <tbody>
+      <tr><th>Range</th><td>$\{1, 2, 3, \ldots\}$</td></tr>
+      <tr><th>pmf</th><td>$p(k) = (1-p)^{k-1} p$</td></tr>
+      <tr><th>Mean</th><td>$E(X) = 1/p$</td></tr>
+      <tr><th>Variance</th><td>$\mathrm{Var}(X) = (1-p)/p^2$</td></tr>
+      <tr><th>MGF</th><td>$M(t) = \dfrac{p e^t}{1 - (1-p)e^t}$ &nbsp;(valid for $e^t(1-p) < 1$)</td></tr>
+      <tr><th>Use when</th><td>Counting trials until first success. "How many tosses until the first head?"</td></tr>
+      <tr><th>Memoryless</th><td>$P(X > m + n \mid X > m) = P(X > n)$ — the only discrete memoryless distribution.</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- NEGATIVE BINOMIAL -->
+<section class="section" id="negbin">
+  <h2 style="margin-top:0">Negative Binomial(r, p)</h2>
+
+  <p><strong>Model:</strong> number of trials needed to get the $r$-th success.</p>
+
+  <table>
+    <tbody>
+      <tr><th>Range</th><td>$\{r, r+1, r+2, \ldots\}$</td></tr>
+      <tr><th>pmf</th><td>$p(k) = \binom{k-1}{r-1} p^r (1-p)^{k-r}$</td></tr>
+      <tr><th>Mean</th><td>$E(X) = r/p$</td></tr>
+      <tr><th>Variance</th><td>$\mathrm{Var}(X) = r(1-p)/p^2$</td></tr>
+      <tr><th>MGF</th><td>$M(t) = \left[\dfrac{p e^t}{1 - (1-p)e^t}\right]^r$</td></tr>
+      <tr><th>Note</th><td>Negative Binomial(1, p) = Geometric(p). It is the sum of $r$ independent geometrics.</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- HYPERGEOMETRIC -->
+<section class="section" id="hyper">
+  <h2 style="margin-top:0">Hypergeometric(N, K, n)</h2>
+
+  <p><strong>Model:</strong> $N$ objects, $K$ of them are of a special type ("successes"). Draw $n$ at random <em>without replacement</em>. $X$ = number of successes drawn.</p>
+
+  <table>
+    <tbody>
+      <tr><th>Range</th><td>$\max(0, n - (N-K)) \le k \le \min(n, K)$</td></tr>
+      <tr><th>pmf</th><td>$p(k) = \dfrac{\binom{K}{k}\binom{N-K}{n-k}}{\binom{N}{n}}$</td></tr>
+      <tr><th>Mean</th><td>$E(X) = n \cdot \dfrac{K}{N}$</td></tr>
+      <tr><th>Variance</th><td>$\mathrm{Var}(X) = n \cdot \dfrac{K}{N} \cdot \dfrac{N-K}{N} \cdot \dfrac{N-n}{N-1}$</td></tr>
+      <tr><th>MGF</th><td>No simple closed form.</td></tr>
+      <tr><th>Use when</th><td>Drawing a sample without replacement from a finite population — defective items, lottery, poker.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="key-points">
+    <h4>Binomial approximation</h4>
+    When $n/N < 0.05$ (sample is small vs population), hypergeometric ≈ Binomial(n, K/N). The "finite population correction" factor $(N-n)/(N-1)$ then ≈ 1.
+  </div>
+</section>
+
+<!-- POISSON -->
+<section class="section" id="poisson">
+  <h2 style="margin-top:0">Poisson(λ)</h2>
+
+  <p><strong>Model:</strong> count of events in a fixed interval of time or space, when events happen at an average rate $\lambda$ independently of each other.</p>
+
+  <table>
+    <tbody>
+      <tr><th>Range</th><td>$\{0, 1, 2, \ldots\}$</td></tr>
+      <tr><th>pmf</th><td>$p(k) = \dfrac{e^{-\lambda} \lambda^k}{k!}$</td></tr>
+      <tr><th>Mean</th><td>$E(X) = \lambda$</td></tr>
+      <tr><th>Variance</th><td>$\mathrm{Var}(X) = \lambda$ (mean = variance is the Poisson fingerprint)</td></tr>
+      <tr><th>MGF</th><td>$M(t) = e^{\lambda(e^t - 1)}$</td></tr>
+      <tr><th>Use when</th><td>Rare events in continuous time/space: phone calls per hour, typos per page, decays per minute, insurance claims per month.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="key-points">
+    <h4>Poisson approximation to the binomial</h4>
+    When $n$ is large and $p$ is small with $np = \lambda$ moderate, Binomial(n, p) ≈ Poisson(np). Rule of thumb: $n \ge 20$ and $p \le 0.05$.
+  </div>
+
+  <div class="example">
+    <span class="label">Example</span>
+    A hotline receives on average 3 calls per hour. Probability of exactly 5 calls in the next hour:
+    $$P(X = 5) = \frac{e^{-3} 3^5}{5!} = \frac{e^{-3} \cdot 243}{120} \approx 0.1008$$
+  </div>
+</section>
+
+<!-- UNIFORM -->
+<section class="section" id="uniform">
+  <h2 style="margin-top:0">Uniform(a, b) — continuous</h2>
+
+  <p><strong>Model:</strong> all values in $[a, b]$ are equally likely.</p>
+
+  <table>
+    <tbody>
+      <tr><th>pdf</th><td>$f(x) = \dfrac{1}{b-a}$ for $a \le x \le b$, 0 elsewhere</td></tr>
+      <tr><th>Mean</th><td>$E(X) = \dfrac{a+b}{2}$</td></tr>
+      <tr><th>Variance</th><td>$\mathrm{Var}(X) = \dfrac{(b-a)^2}{12}$</td></tr>
+      <tr><th>MGF</th><td>$M(t) = \dfrac{e^{bt} - e^{at}}{t(b-a)}$ &nbsp;($t \ne 0$)</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- EXPONENTIAL -->
+<section class="section" id="expo">
+  <h2 style="margin-top:0">Exponential(θ)</h2>
+
+  <p><strong>Model:</strong> time until the next event in a Poisson process. $\theta$ is the mean (some texts use rate $\lambda = 1/\theta$).</p>
+
+  <table>
+    <tbody>
+      <tr><th>pdf</th><td>$f(x) = \dfrac{1}{\theta} e^{-x/\theta}$ for $x \ge 0$</td></tr>
+      <tr><th>cdf</th><td>$F(x) = 1 - e^{-x/\theta}$ for $x \ge 0$</td></tr>
+      <tr><th>Mean</th><td>$E(X) = \theta$</td></tr>
+      <tr><th>Variance</th><td>$\mathrm{Var}(X) = \theta^2$</td></tr>
+      <tr><th>MGF</th><td>$M(t) = \dfrac{1}{1 - \theta t}$ for $t < 1/\theta$</td></tr>
+      <tr><th>Memoryless</th><td>$P(X > s + t \mid X > s) = P(X > t)$ — the only continuous memoryless distribution.</td></tr>
+      <tr><th>Use when</th><td>Modeling waiting times, lifetimes, time between arrivals.</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- NORMAL -->
+<section class="section" id="normal">
+  <h2 style="margin-top:0">Normal(μ, σ²) — the bell curve</h2>
+
+  <table>
+    <tbody>
+      <tr><th>pdf</th><td>$f(x) = \dfrac{1}{\sigma \sqrt{2\pi}} \exp\!\left(-\dfrac{(x - \mu)^2}{2 \sigma^2}\right)$</td></tr>
+      <tr><th>Mean</th><td>$E(X) = \mu$</td></tr>
+      <tr><th>Variance</th><td>$\mathrm{Var}(X) = \sigma^2$</td></tr>
+      <tr><th>MGF</th><td>$M(t) = \exp\!\left(\mu t + \dfrac{\sigma^2 t^2}{2}\right)$</td></tr>
+      <tr><th>Standardize</th><td>$Z = (X - \mu)/\sigma \sim N(0, 1)$</td></tr>
+    </tbody>
+  </table>
+
+  <div class="key-points">
+    <h4>Key properties</h4>
+    <ul>
+      <li><strong>Symmetric and bell-shaped</strong> around $\mu$.</li>
+      <li>About 68% within 1 sd, 95% within 2 sd, 99.7% within 3 sd of $\mu$.</li>
+      <li>Central Limit Theorem: sample means from <em>any</em> distribution with finite variance tend to a normal distribution as $n \to \infty$.</li>
+      <li>Sum of independent normals is normal: if $X_i \sim N(\mu_i, \sigma_i^2)$ are independent, $\sum X_i \sim N(\sum \mu_i, \sum \sigma_i^2)$.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- SUMMARY -->
+<section class="section" id="summary">
+  <h2 style="margin-top:0">Summary table</h2>
+  <table>
+    <thead><tr><th>Distribution</th><th>Mean</th><th>Variance</th><th>MGF</th></tr></thead>
+    <tbody>
+      <tr><td>Bernoulli(p)</td><td>$p$</td><td>$p(1-p)$</td><td>$1 - p + pe^t$</td></tr>
+      <tr><td>Binomial(n, p)</td><td>$np$</td><td>$np(1-p)$</td><td>$(1 - p + pe^t)^n$</td></tr>
+      <tr><td>Geometric(p)</td><td>$1/p$</td><td>$(1-p)/p^2$</td><td>$pe^t / (1 - (1-p)e^t)$</td></tr>
+      <tr><td>Neg. Bin(r, p)</td><td>$r/p$</td><td>$r(1-p)/p^2$</td><td>$[pe^t / (1 - (1-p)e^t)]^r$</td></tr>
+      <tr><td>Hypergeom(N,K,n)</td><td>$nK/N$</td><td>$n \tfrac{K}{N} \tfrac{N-K}{N} \tfrac{N-n}{N-1}$</td><td>no closed form</td></tr>
+      <tr><td>Poisson(λ)</td><td>$\lambda$</td><td>$\lambda$</td><td>$e^{\lambda(e^t - 1)}$</td></tr>
+      <tr><td>Uniform[a, b]</td><td>$(a+b)/2$</td><td>$(b-a)^2/12$</td><td>$(e^{bt} - e^{at}) / (t(b-a))$</td></tr>
+      <tr><td>Exponential(θ)</td><td>$\theta$</td><td>$\theta^2$</td><td>$1/(1 - \theta t)$</td></tr>
+      <tr><td>Normal(μ, σ²)</td><td>$\mu$</td><td>$\sigma^2$</td><td>$\exp(\mu t + \sigma^2 t^2 / 2)$</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- DECISION -->
+<section class="section" id="decision">
+  <h2 style="margin-top:0">Which distribution should I use?</h2>
+
+  <table>
+    <thead><tr><th>If the problem is about…</th><th>Use…</th></tr></thead>
+    <tbody>
+      <tr><td>A single yes/no trial</td><td>Bernoulli</td></tr>
+      <tr><td>Number of successes in $n$ independent trials, same $p$</td><td>Binomial</td></tr>
+      <tr><td>Number of trials to the 1st success</td><td>Geometric</td></tr>
+      <tr><td>Number of trials to the $r$-th success</td><td>Negative Binomial</td></tr>
+      <tr><td>Sampling without replacement from a finite population</td><td>Hypergeometric</td></tr>
+      <tr><td>Count of rare events per interval of time/space</td><td>Poisson</td></tr>
+      <tr><td>Waiting time between Poisson events</td><td>Exponential</td></tr>
+      <tr><td>Continuous value with all parts of an interval equally likely</td><td>Uniform</td></tr>
+      <tr><td>Measurement data, sample means, test scores</td><td>Normal</td></tr>
+    </tbody>
+  </table>
+
+  <div class="key-points">
+    <h4>Finding E and Var via MGF (worked)</h4>
+    Take $M(t) = e^{\lambda(e^t - 1)}$ (Poisson).
+    <ul>
+      <li>$M'(t) = \lambda e^t \cdot e^{\lambda(e^t - 1)}$ → $M'(0) = \lambda \cdot 1 = \lambda$. So $E(X) = \lambda$. ✓</li>
+      <li>$M''(t) = \lambda e^t \cdot M(t) + \lambda e^t \cdot \lambda e^t \cdot M(t) = \lambda e^t M(t) [1 + \lambda e^t]$</li>
+      <li>$M''(0) = \lambda(1 + \lambda) = \lambda + \lambda^2 = E(X^2)$</li>
+      <li>$\mathrm{Var}(X) = E(X^2) - [E(X)]^2 = \lambda + \lambda^2 - \lambda^2 = \lambda$ ✓</li>
+    </ul>
+  </div>
+</section>
+
+</div>
+</div>
+</main>
+
+<footer>Built for MATH 2411 · HKUST Fall 2026</footer>
+
+</body>
+</html>

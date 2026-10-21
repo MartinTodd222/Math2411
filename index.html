@@ -21,6 +21,8 @@
       <a href="chapter2.html">Ch 2</a>
       <a href="chapter3.html">Ch 3</a>
       <a href="formulas.html">Formulas</a>
+      <a href="quiz.html">Quiz</a>
+      <a href="true-false.html">T/F</a>
     </nav>
   </div>
 </header>
@@ -68,18 +70,39 @@
 
   <div class="chapter-card">
     <div class="num">3</div>
-    <h3>Random Variables (3.1–3.2)</h3>
-    <p>Discrete random variables: pmf, cdf, expectation and variance. Linearity rules and worked recipes.</p>
+    <h3>Random Variables (3.1–3.5)</h3>
+    <p>Discrete and continuous r.v.'s, named distributions, Chebyshev's inequality, and moment generating functions.</p>
     <div class="topics">
-      <span class="topic-chip">pmf · cdf</span>
+      <span class="topic-chip">pmf · cdf · pdf</span>
       <span class="topic-chip">E(X), Var(X)</span>
-      <span class="topic-chip">E(aX + b)</span>
-      <span class="topic-chip">Independence</span>
-      <span class="topic-chip">Indicators</span>
+      <span class="topic-chip">Binomial · Poisson</span>
+      <span class="topic-chip">Normal · Exponential</span>
+      <span class="topic-chip">Chebyshev · MGF</span>
     </div>
     <a href="chapter3.html" class="card-link">Open Chapter 3 →</a>
   </div>
 
+</div>
+
+<div class="chapters" style="margin-top: 24px;">
+  <div class="chapter-card">
+    <div class="num" style="font-size: 2.5rem;">❓</div>
+    <h3>Multiple-choice quiz</h3>
+    <p>~30 questions covering all three chapters. Pick an answer, see the explanation. Progress saved in your browser.</p>
+    <a href="quiz.html" class="card-link">Start quiz →</a>
+  </div>
+  <div class="chapter-card">
+    <div class="num" style="font-size: 2.5rem;">✓</div>
+    <h3>True or False</h3>
+    <p>~25 statements targeting the classic exam traps. Filter by chapter, show only the ones you got wrong.</p>
+    <a href="true-false.html" class="card-link">Start T/F →</a>
+  </div>
+  <div class="chapter-card">
+    <div class="num" style="font-size: 2.5rem;">📝</div>
+    <h3>Formula sheet</h3>
+    <p>One-page reference. All formulas from the three chapters, grouped the same way.</p>
+    <a href="formulas.html" class="card-link">Open formulas →</a>
+  </div>
 </div>
 
 <div class="section">
@@ -118,21 +141,19 @@
       </ul>
     </div>
     <div>
-      <h4>Chapter 3 — Random Variables (3.1–3.2)</h4>
+      <h4>Chapter 3 — Random Variables (3.1–3.5)</h4>
       <ul>
-        <li>What a random variable is (a function from <em>S</em> to ℝ)</li>
-        <li>Discrete r.v., pmf, properties</li>
-        <li>cdf: step function, right-continuous, jumps = <code>p(x)</code></li>
-        <li>Interval probabilities: watch <code>&lt;</code> vs <code>≤</code></li>
-        <li>Expectation <code>E(X) = Σ x · p(x)</code> and <code>E[g(X)]</code></li>
-        <li>Variance <code>Var(X) = E(X²) − μ²</code></li>
-        <li>Linearity: <code>E(aX + b)</code>, <code>Var(aX + b)</code></li>
-        <li>Sum rules: <code>E(X + Y)</code> always, <code>Var(X + Y)</code> only if independent</li>
+        <li>3.1 What a random variable is (function from <em>S</em> to ℝ)</li>
+        <li>3.2 Discrete r.v., pmf, cdf, E(X), Var(X), linearity</li>
+        <li>3.3 Continuous r.v.: pdf, cdf, E(X) via integral</li>
+        <li>3.4 Named distributions: Binomial, Hypergeometric, Poisson, Uniform, Exponential, Normal</li>
+        <li>Chebyshev's inequality (works for ANY distribution)</li>
+        <li>3.5 Moment generating functions (MGF)</li>
       </ul>
     </div>
   </div>
   <p style="margin-top: 16px; color: var(--muted); font-size: 0.9rem;">
-    Not in scope for the midterm: Chapter 3.3+ (continuous r.v., named distributions, MGF) and inferential statistics.
+    Not in scope for the midterm: inferential statistics (estimation, hypothesis testing, regression — covered later in the course).
   </p>
 </div>
 
