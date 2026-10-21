@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Worked examples — MATH 2411</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧮</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Newsreader:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+<script>
+  MathJax = { tex: { inlineMath: [['$','$'],['\\(','\\)']] } };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+</head>
+<body>
+
+<header class="top">
+  <div class="top-inner">
+    <div class="brand">MATH 2411 Midterm<small>HKUST · Fall 2026</small></div>
+    <nav class="chapternav">
+      <a href="index.html">Overview</a>
+      <a href="chapter1.html">Ch 1</a>
+      <a href="chapter2.html">Ch 2</a>
+      <a href="chapter3.html">Ch 3</a>
+      <a href="formulas.html">Formulas</a>
+      <a href="tips.html">Tips</a>
+      <a href="distributions.html">Distributions</a>
+      <a href="examples.html" class="active">Examples</a>
+      <a href="quiz.html">Quiz</a>
+      <a href="true-false.html">T/F</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+<div class="chapter-layout">
+<aside class="chapter-sidebar">
+  <h4>Jump to</h4>
+  <ul>
+    <li><a href="#mgf-bernoulli">MGF: Bernoulli</a></li>
+    <li><a href="#mgf-binomial">MGF: Binomial</a></li>
+    <li><a href="#mgf-geometric">MGF: Geometric</a></li>
+    <li><a href="#mgf-poisson">MGF: Poisson</a></li>
+    <li><a href="#mgf-exponential">MGF: Exponential</a></li>
+    <li><a href="#mgf-normal">MGF: Normal</a></li>
+    <li><a href="#mgf-sums">Sums via MGF</a></li>
+    <li><a href="#exam-ch1">Exam-style Ch 1</a></li>
+    <li><a href="#exam-ch2">Exam-style Ch 2</a></li>
+    <li><a href="#exam-ch3-discrete">Exam-style Ch 3 (discrete)</a></li>
+    <li><a href="#exam-ch3-continuous">Exam-style Ch 3 (continuous)</a></li>
+    <li><a href="#exam-ch3-normal">Exam-style Ch 3 (normal)</a></li>
+    <li><a href="#exam-chebyshev">Chebyshev example</a></li>
+  </ul>
+</aside>
+
+<div>
+
+<h1>Worked examples — long form</h1>
+<p class="lede">Full derivations and exam-style problems with step-by-step solutions. Start with the MGF derivations if you want to see where the formulas on the Distributions page come from.</p>
+
+<!-- ================= MGF DERIVATIONS ================= -->
+<h2 style="margin-top: 24px;">Part 1 — MGF derivations from scratch</h2>
+<p class="lede" style="margin-bottom: 16px;">Each one starts from the definition $M_X(t) = E(e^{tX})$ and ends with a closed form. Then we verify $E(X) = M'(0)$ and $\mathrm{Var}(X) = M''(0) - [M'(0)]^2$.</p>
+
+<!-- Bernoulli -->
+<section class="section" id="mgf-bernoulli">
+  <h2 style="margin-top:0">MGF of Bernoulli(p)</h2>
+
+  <p>$X$ takes values 0 (prob $1-p$) and 1 (prob $p$).</p>
+
+  <div class="example">
+    <span class="label">Derivation</span>
+    $$M_X(t) = E(e^{tX}) = \sum_{x \in \{0, 1\}} e^{tx} \, p(x) = e^{t \cdot 0}(1 - p) + e^{t \cdot 1} \cdot p$$
+    $$\boxed{M_X(t) = (1 - p) + p e^t}$$
+
+    <strong>Check moments.</strong>
+    <ul>
+      <li>$M'(t) = p e^t$, so $M'(0) = p = E(X)$ ✓</li>
+      <li>$M''(t) = p e^t$, so $M''(0) = p = E(X^2)$</li>
+      <li>$\mathrm{Var}(X) = p - p^2 = p(1 - p)$ ✓</li>
+    </ul>
+  </div>
+</section>
+
+<!-- Binomial -->
+<section class="section" id="mgf-binomial">
+  <h2 style="margin-top:0">MGF of Binomial(n, p)</h2>
+
+  <p>The clean way: use that $X \sim \text{Bin}(n, p)$ equals the sum of $n$ independent Bernoulli(p) r.v.'s.</p>
+
+  <div class="example">
+    <span class="label">Derivation via product rule</span>
+    If $X = Y_1 + Y_2 + \cdots + Y_n$ where the $Y_i$ are independent Bernoulli(p):
+    $$M_X(t) = \prod_{i=1}^{n} M_{Y_i}(t) = \prod_{i=1}^{n} [(1-p) + pe^t] = [(1-p) + pe^t]^n$$
+    $$\boxed{M_X(t) = \left[(1 - p) + pe^t\right]^n}$$
+
+    <strong>Check moments.</strong> Let $u = (1-p) + pe^t$.
+    <ul>
+      <li>$M'(t) = n u^{n-1} \cdot pe^t$. At $t = 0$: $u = 1$, so $M'(0) = n \cdot 1 \cdot p = np = E(X)$ ✓</li>
+      <li>$M''(t) = n(n-1) u^{n-2} \cdot (pe^t)^2 + n u^{n-1} \cdot pe^t$. At $t = 0$: $n(n-1)p^2 + np = E(X^2)$</li>
+      <li>$\mathrm{Var}(X) = n(n-1)p^2 + np - n^2 p^2 = np - np^2 = np(1 - p)$ ✓</li>
+    </ul>
+  </div>
+
+  <div class="example">
+    <span class="label">Direct derivation (alternative)</span>
+    $$M_X(t) = \sum_{k=0}^{n} e^{tk} \binom{n}{k} p^k (1-p)^{n-k} = \sum_{k=0}^{n} \binom{n}{k} (pe^t)^k (1-p)^{n-k}$$
+    This is the binomial theorem $(a + b)^n = \sum \binom{n}{k} a^k b^{n-k}$ with $a = pe^t$, $b = 1-p$:
+    $$= (pe^t + 1 - p)^n = [(1-p) + pe^t]^n$$
+    Same answer.
+  </div>
+</section>
+
+<!-- Geometric -->
+<section class="section" id="mgf-geometric">
+  <h2 style="margin-top:0">MGF of Geometric(p)</h2>
+
+  <p>$X$ = number of trials until the first success; range $\{1, 2, 3, \ldots\}$ with $p(k) = (1-p)^{k-1} p$.</p>
+
+  <div class="example">
+    <span class="label">Derivation</span>
+    $$M_X(t) = \sum_{k=1}^{\infty} e^{tk} (1-p)^{k-1} p = \frac{p}{1-p} \sum_{k=1}^{\infty} \left[(1-p)e^t\right]^k$$
+    Let $r = (1-p)e^t$. Geometric series $\sum_{k=1}^{\infty} r^k = \dfrac{r}{1 - r}$ (converges for $|r| < 1$):
+    $$M_X(t) = \frac{p}{1-p} \cdot \frac{(1-p)e^t}{1 - (1-p)e^t} = \frac{p e^t}{1 - (1-p)e^t}$$
+    $$\boxed{M_X(t) = \frac{p e^t}{1 - (1-p)e^t}, \quad \text{valid when } (1-p)e^t < 1}$$
+
+    <strong>Mean (via quotient rule).</strong> Let $u = pe^t$, $v = 1 - (1-p)e^t$.
+    $$M'(t) = \frac{u'v - uv'}{v^2} = \frac{pe^t[1 - (1-p)e^t] - pe^t \cdot [-(1-p)e^t]}{v^2} = \frac{pe^t}{v^2}$$
+    At $t = 0$: $v = 1 - (1-p) = p$, so $M'(0) = \dfrac{p \cdot 1}{p^2} = \dfrac{1}{p} = E(X)$ ✓
+  </div>
+</section>
+
+<!-- Poisson -->
+<section class="section" id="mgf-poisson">
+  <h2 style="margin-top:0">MGF of Poisson(λ)</h2>
+
+  <div class="example">
+    <span class="label">Derivation</span>
+    $$M_X(t) = \sum_{k=0}^{\infty} e^{tk} \cdot \frac{e^{-\lambda} \lambda^k}{k!} = e^{-\lambda} \sum_{k=0}^{\infty} \frac{(\lambda e^t)^k}{k!}$$
+    Recognize the exponential series $\sum_{k=0}^{\infty} \frac{a^k}{k!} = e^a$ with $a = \lambda e^t$:
+    $$= e^{-\lambda} \cdot e^{\lambda e^t} = e^{\lambda(e^t - 1)}$$
+    $$\boxed{M_X(t) = e^{\lambda(e^t - 1)}}$$
+
+    <strong>Moments.</strong>
+    <ul>
+      <li>$M'(t) = \lambda e^t \cdot M(t)$. At $t = 0$: $M'(0) = \lambda \cdot 1 = \lambda = E(X)$ ✓</li>
+      <li>$M''(t) = \lambda e^t \cdot M(t) + \lambda e^t \cdot \lambda e^t \cdot M(t) = \lambda e^t M(t)[1 + \lambda e^t]$</li>
+      <li>At $t = 0$: $M''(0) = \lambda(1 + \lambda) = \lambda + \lambda^2 = E(X^2)$</li>
+      <li>$\mathrm{Var}(X) = \lambda + \lambda^2 - \lambda^2 = \lambda$ ✓ (mean = variance, the Poisson fingerprint)</li>
+    </ul>
+  </div>
+</section>
+
+<!-- Exponential -->
+<section class="section" id="mgf-exponential">
+  <h2 style="margin-top:0">MGF of Exponential(θ)</h2>
+
+  <p>$f(x) = \tfrac{1}{\theta} e^{-x/\theta}$ for $x \ge 0$.</p>
+
+  <div class="example">
+    <span class="label">Derivation</span>
+    $$M_X(t) = \int_0^{\infty} e^{tx} \cdot \frac{1}{\theta} e^{-x/\theta} \, dx = \frac{1}{\theta} \int_0^{\infty} e^{-(1/\theta - t) x} \, dx$$
+    For the integral to converge we need $1/\theta - t > 0$, i.e. $t < 1/\theta$. Then:
+    $$= \frac{1}{\theta} \cdot \frac{1}{1/\theta - t} = \frac{1}{1 - \theta t}$$
+    $$\boxed{M_X(t) = \frac{1}{1 - \theta t}, \quad t < \frac{1}{\theta}}$$
+
+    <strong>Moments.</strong> $M(t) = (1 - \theta t)^{-1}$.
+    <ul>
+      <li>$M'(t) = \theta (1 - \theta t)^{-2}$. $M'(0) = \theta = E(X)$ ✓</li>
+      <li>$M''(t) = 2\theta^2 (1 - \theta t)^{-3}$. $M''(0) = 2\theta^2 = E(X^2)$</li>
+      <li>$\mathrm{Var}(X) = 2\theta^2 - \theta^2 = \theta^2$ ✓</li>
+    </ul>
+  </div>
+</section>
+
+<!-- Normal -->
+<section class="section" id="mgf-normal">
+  <h2 style="margin-top:0">MGF of Normal(μ, σ²) — the classic completing-the-square proof</h2>
+
+  <div class="example">
+    <span class="label">Derivation</span>
+    First, the standard normal $Z \sim N(0, 1)$:
+    $$M_Z(t) = \int_{-\infty}^{\infty} e^{tz} \cdot \frac{1}{\sqrt{2\pi}} e^{-z^2/2} \, dz = \frac{1}{\sqrt{2\pi}} \int_{-\infty}^{\infty} e^{tz - z^2/2} \, dz$$
+
+    <strong>Complete the square</strong> in the exponent:
+    $$tz - \frac{z^2}{2} = -\frac{1}{2}\left(z^2 - 2tz\right) = -\frac{1}{2}\left((z - t)^2 - t^2\right) = \frac{t^2}{2} - \frac{(z-t)^2}{2}$$
+
+    Pull out $e^{t^2/2}$:
+    $$M_Z(t) = e^{t^2/2} \cdot \frac{1}{\sqrt{2\pi}} \int_{-\infty}^{\infty} e^{-(z-t)^2/2} \, dz$$
+
+    The remaining integral is the integral of a $N(t, 1)$ density, which equals 1. So:
+    $$\boxed{M_Z(t) = e^{t^2/2}}$$
+
+    Now for general $X \sim N(\mu, \sigma^2)$: write $X = \mu + \sigma Z$. Using the linear-transformation rule $M_{aZ + b}(t) = e^{bt} M_Z(at)$:
+    $$M_X(t) = e^{\mu t} \cdot M_Z(\sigma t) = e^{\mu t} \cdot e^{(\sigma t)^2 / 2} = \exp\!\left(\mu t + \frac{\sigma^2 t^2}{2}\right)$$
+    $$\boxed{M_X(t) = \exp\!\left(\mu t + \frac{\sigma^2 t^2}{2}\right)}$$
+
+    <strong>Moments.</strong> Let $g(t) = \mu t + \sigma^2 t^2 / 2$, so $M(t) = e^{g(t)}$ and $M'(t) = g'(t) M(t)$.
+    <ul>
+      <li>$g'(t) = \mu + \sigma^2 t$, $g'(0) = \mu$. $M'(0) = \mu \cdot 1 = \mu = E(X)$ ✓</li>
+      <li>$M''(t) = g''(t) M(t) + [g'(t)]^2 M(t) = (\sigma^2 + (\mu + \sigma^2 t)^2) M(t)$</li>
+      <li>$M''(0) = \sigma^2 + \mu^2 = E(X^2)$</li>
+      <li>$\mathrm{Var}(X) = \sigma^2 + \mu^2 - \mu^2 = \sigma^2$ ✓</li>
+    </ul>
+  </div>
+</section>
+
+<!-- Sums via MGF -->
+<section class="section" id="mgf-sums">
+  <h2 style="margin-top:0">Using MGF uniqueness to find distributions of sums</h2>
+
+  <div class="example">
+    <span class="label">Sum of independent Poissons is Poisson</span>
+    $X \sim \text{Poisson}(\lambda_1)$, $Y \sim \text{Poisson}(\lambda_2)$ independent. Then
+    $$M_{X+Y}(t) = M_X(t) \cdot M_Y(t) = e^{\lambda_1(e^t - 1)} \cdot e^{\lambda_2(e^t - 1)} = e^{(\lambda_1 + \lambda_2)(e^t - 1)}$$
+    which is the MGF of Poisson$(\lambda_1 + \lambda_2)$. By uniqueness,
+    $$X + Y \sim \text{Poisson}(\lambda_1 + \lambda_2)$$
+  </div>
+
+  <div class="example">
+    <span class="label">Sum of independent normals is normal</span>
+    $X_1 \sim N(\mu_1, \sigma_1^2)$, $X_2 \sim N(\mu_2, \sigma_2^2)$ independent.
+    $$M_{X_1 + X_2}(t) = \exp\!\left(\mu_1 t + \tfrac{\sigma_1^2 t^2}{2}\right) \exp\!\left(\mu_2 t + \tfrac{\sigma_2^2 t^2}{2}\right) = \exp\!\left((\mu_1 + \mu_2) t + \tfrac{(\sigma_1^2 + \sigma_2^2) t^2}{2}\right)$$
+    So $X_1 + X_2 \sim N(\mu_1 + \mu_2, \sigma_1^2 + \sigma_2^2)$.
+  </div>
+
+  <div class="example">
+    <span class="label">Sum of independent binomials with the same p</span>
+    $X \sim \text{Bin}(n_1, p)$, $Y \sim \text{Bin}(n_2, p)$ independent.
+    $$M_{X+Y}(t) = [(1-p) + pe^t]^{n_1} \cdot [(1-p) + pe^t]^{n_2} = [(1-p) + pe^t]^{n_1 + n_2}$$
+    So $X + Y \sim \text{Bin}(n_1 + n_2, p)$. Note: this fails if the two have different $p$.
+  </div>
+</section>
+
+<!-- =============== EXAM-STYLE PROBLEMS =============== -->
+<h2 style="margin-top: 40px;">Part 2 — Full exam-style problems</h2>
+<p class="lede" style="margin-bottom: 16px;">Each problem is written in the style of a 10-point long question. Solutions show every step.</p>
+
+<!-- CH1 EXAM -->
+<section class="section" id="exam-ch1">
+  <h2 style="margin-top:0">Chapter 1 — descriptive stats, full problem</h2>
+
+  <div class="example">
+    <span class="label">Problem</span>
+    The hourly wages (in $) of 15 workers:<br>
+    15, 18, 20, 22, 22, 25, 27, 28, 30, 32, 34, 35, 42, 55, 85<br><br>
+    (a) Find the mean, median and 10% trimmed mean.<br>
+    (b) Compute $s^2$ and $s$ (using $n-1$).<br>
+    (c) Find $Q_1, Q_2, Q_3$ using the $np + 0.5$ rule, and $IQR$.<br>
+    (d) Identify any outliers.<br>
+    (e) Which measure of center would you report, and why?
+  </div>
+
+  <div class="example">
+    <span class="label">Solution</span>
+    Data sorted: 15, 18, 20, 22, 22, 25, 27, 28, 30, 32, 34, 35, 42, 55, 85.
+
+    <p><strong>(a) Center.</strong></p>
+    <ul>
+      <li>Sum = 15+18+20+22+22+25+27+28+30+32+34+35+42+55+85 = 490. Mean = 490/15 = <b>32.667</b>.</li>
+      <li>Median ($n = 15$ odd): $x_{((15+1)/2)} = x_{(8)} = $ <b>28</b>.</li>
+      <li>10% trimmed mean: 10% of 15 = 1.5 → trim 1 from each end (round down). Average of middle 13:
+        (18+20+22+22+25+27+28+30+32+34+35+42+55)/13 = 390/13 = <b>30.0</b>.</li>
+    </ul>
+
+    <p><strong>(b) Spread.</strong></p>
+    Compute deviations from $\bar{x} = 32.667$, square and sum (showing just the result):
+    $$\sum (x_i - 32.667)^2 \approx 4769.33$$
+    $$s^2 = \frac{4769.33}{14} \approx 340.67, \quad s \approx 18.46$$
+
+    <p><strong>(c) Quartiles.</strong></p>
+    <ul>
+      <li>$Q_1$: $15 \cdot 0.25 + 0.5 = 4.25 \to$ avg of 4th and 5th = $(22+22)/2 = $ <b>22</b>.</li>
+      <li>$Q_2$: $15 \cdot 0.50 + 0.5 = 8 \to$ 8th value = <b>28</b>.</li>
+      <li>$Q_3$: $15 \cdot 0.75 + 0.5 = 11.75 \to$ avg of 11th and 12th = $(34+35)/2 = $ <b>34.5</b>.</li>
+      <li>$IQR = 34.5 - 22 = $ <b>12.5</b>.</li>
+    </ul>
+
+    <p><strong>(d) Outliers.</strong> Fences: lower = $22 - 1.5 \cdot 12.5 = 3.25$; upper = $34.5 + 1.5 \cdot 12.5 = 53.25$. Points at or beyond: <b>55 and 85 are outliers</b>; no low outliers.</p>
+
+    <p><strong>(e) Which to report?</strong> The data is <strong>right-skewed</strong> (mean 32.67 is pulled above median 28 by the two high outliers). Report the <strong>median</strong> as the typical wage.</p>
+  </div>
+</section>
+
+<!-- CH2 EXAM -->
+<section class="section" id="exam-ch2">
+  <h2 style="margin-top:0">Chapter 2 — full Bayes + counting problem</h2>
+
+  <div class="example">
+    <span class="label">Problem</span>
+    Three factories A, B, C produce 50%, 30%, 20% of a product respectively. The defective rates are 1%, 2%, 3%.<br><br>
+    (a) What is the probability a randomly chosen product is defective?<br>
+    (b) Given that a product is defective, what is the probability it came from factory C?<br>
+    (c) 5 products are randomly selected (with replacement). What is the probability that at least one is defective?
+  </div>
+
+  <div class="example">
+    <span class="label">Solution</span>
+
+    <p>Let $A, B, C$ = factory events, $D$ = defective. Given: $P(A)=0.5$, $P(B)=0.3$, $P(C)=0.2$, $P(D|A)=0.01$, $P(D|B)=0.02$, $P(D|C)=0.03$.</p>
+
+    <p><strong>(a) Law of total probability.</strong></p>
+    $$P(D) = P(D|A)P(A) + P(D|B)P(B) + P(D|C)P(C) = 0.01(0.5) + 0.02(0.3) + 0.03(0.2)$$
+    $$= 0.005 + 0.006 + 0.006 = \mathbf{0.017}$$
+
+    <p><strong>(b) Bayes.</strong></p>
+    $$P(C | D) = \frac{P(D | C) P(C)}{P(D)} = \frac{0.006}{0.017} = \mathbf{0.3529}$$
+    So even though C makes only 20% of products, it accounts for ~35% of defectives (because it has the highest defect rate).
+
+    <p><strong>(c) At least one defective — use complement.</strong></p>
+    $P(\text{not defective}) = 1 - 0.017 = 0.983$. With 5 independent selections,
+    $$P(\text{all 5 non-defective}) = (0.983)^5 \approx 0.9178$$
+    $$P(\text{at least one defective}) = 1 - 0.9178 = \mathbf{0.0822}$$
+  </div>
+</section>
+
+<!-- CH3 DISCRETE EXAM -->
+<section class="section" id="exam-ch3-discrete">
+  <h2 style="margin-top:0">Chapter 3 — discrete r.v. full problem</h2>
+
+  <div class="example">
+    <span class="label">Problem</span>
+    The pmf of a discrete r.v. $X$ is
+    $$p(x) = c \cdot (x + 1), \quad x = 0, 1, 2, 3$$
+    (a) Find $c$.<br>
+    (b) Find the cdf $F(x)$.<br>
+    (c) Find $E(X)$, $E(X^2)$ and $\mathrm{Var}(X)$.<br>
+    (d) Let $Y = 3X - 2$. Find $E(Y)$ and $\mathrm{Var}(Y)$.<br>
+    (e) Find $P(1 \le X < 3)$.
+  </div>
+
+  <div class="example">
+    <span class="label">Solution</span>
+
+    <p><strong>(a) Normalize.</strong> $p(0) + p(1) + p(2) + p(3) = c(1 + 2 + 3 + 4) = 10c = 1 \Rightarrow c = 1/10 = 0.1$.</p>
+
+    So $p(0) = 0.1$, $p(1) = 0.2$, $p(2) = 0.3$, $p(3) = 0.4$.
+
+    <p><strong>(b) cdf.</strong></p>
+    $$F(x) = \begin{cases} 0, & x < 0 \\ 0.1, & 0 \le x < 1 \\ 0.3, & 1 \le x < 2 \\ 0.6, & 2 \le x < 3 \\ 1, & x \ge 3 \end{cases}$$
+
+    <p><strong>(c) Moments.</strong></p>
+    $$E(X) = 0(0.1) + 1(0.2) + 2(0.3) + 3(0.4) = 0 + 0.2 + 0.6 + 1.2 = \mathbf{2.0}$$
+    $$E(X^2) = 0 + 1(0.2) + 4(0.3) + 9(0.4) = 0.2 + 1.2 + 3.6 = \mathbf{5.0}$$
+    $$\mathrm{Var}(X) = E(X^2) - [E(X)]^2 = 5 - 4 = \mathbf{1}$$
+
+    <p><strong>(d) Linear transformation.</strong></p>
+    $$E(Y) = E(3X - 2) = 3E(X) - 2 = 3(2) - 2 = \mathbf{4}$$
+    $$\mathrm{Var}(Y) = 3^2 \mathrm{Var}(X) = 9 \cdot 1 = \mathbf{9}$$
+
+    <p><strong>(e) Interval probability.</strong></p>
+    $P(1 \le X < 3) = p(1) + p(2) = 0.2 + 0.3 = \mathbf{0.5}$. &nbsp;(Equivalently, $F(3) - F(1) - p(3) + p(1) = 1 - 0.3 - 0.4 + 0.2 = 0.5$.)
+  </div>
+</section>
+
+<!-- CH3 CONTINUOUS EXAM -->
+<section class="section" id="exam-ch3-continuous">
+  <h2 style="margin-top:0">Chapter 3 — continuous r.v. full problem</h2>
+
+  <div class="example">
+    <span class="label">Problem</span>
+    $X$ has pdf
+    $$f(x) = \begin{cases} k(4 - x^2), & -2 \le x \le 2 \\ 0, & \text{otherwise} \end{cases}$$
+    (a) Find $k$.<br>
+    (b) Find the cdf $F(x)$ for $-2 \le x \le 2$.<br>
+    (c) Find $E(X)$ and $\mathrm{Var}(X)$.<br>
+    (d) Find $P(|X| < 1)$.
+  </div>
+
+  <div class="example">
+    <span class="label">Solution</span>
+
+    <p><strong>(a) Normalize.</strong></p>
+    $$\int_{-2}^{2} k(4 - x^2) \, dx = k \left[4x - \frac{x^3}{3}\right]_{-2}^{2} = k \left[(8 - 8/3) - (-8 + 8/3)\right] = k \cdot \frac{32}{3} = 1$$
+    So $k = \mathbf{3/32}$.
+
+    <p><strong>(b) cdf.</strong> For $-2 \le x \le 2$:</p>
+    $$F(x) = \int_{-2}^{x} \frac{3}{32}(4 - t^2) \, dt = \frac{3}{32} \left[4t - \frac{t^3}{3}\right]_{-2}^{x}$$
+    $$= \frac{3}{32}\left[4x - \frac{x^3}{3} + 8 - \frac{8}{3}\right] = \frac{3}{32}\left[4x - \frac{x^3}{3} + \frac{16}{3}\right]$$
+    $$F(x) = \frac{12x - x^3 + 16}{32}$$
+    Check: $F(2) = (24 - 8 + 16)/32 = 32/32 = 1$ ✓ and $F(-2) = (-24 + 8 + 16)/32 = 0$ ✓.
+
+    <p><strong>(c) Moments.</strong> Since $f$ is <strong>symmetric about 0</strong>, $E(X) = \mathbf{0}$ immediately.</p>
+    $$E(X^2) = \int_{-2}^{2} x^2 \cdot \frac{3}{32}(4 - x^2) \, dx = \frac{3}{32} \int_{-2}^{2} (4x^2 - x^4) \, dx$$
+    $$= \frac{3}{32} \left[\frac{4x^3}{3} - \frac{x^5}{5}\right]_{-2}^{2} = \frac{3}{32} \left[2 \cdot \left(\frac{32}{3} - \frac{32}{5}\right)\right] = \frac{3}{32} \cdot \frac{128}{15} = \frac{4}{5}$$
+    $$\mathrm{Var}(X) = E(X^2) - 0^2 = \mathbf{0.8}$$
+
+    <p><strong>(d) Interval probability.</strong></p>
+    $$P(|X| < 1) = P(-1 < X < 1) = F(1) - F(-1) = \frac{12 - 1 + 16}{32} - \frac{-12 + 1 + 16}{32} = \frac{27 - 5}{32} = \frac{22}{32} = \mathbf{0.6875}$$
+  </div>
+</section>
+
+<!-- CH3 NORMAL EXAM -->
+<section class="section" id="exam-ch3-normal">
+  <h2 style="margin-top:0">Chapter 3 — normal distribution problem</h2>
+
+  <div class="example">
+    <span class="label">Problem</span>
+    Monthly electricity usage in a neighborhood is approximately $N(\mu = 350, \sigma^2 = 2500)$ kWh.<br><br>
+    (a) What percent of households use more than 400 kWh?<br>
+    (b) What percent use between 300 and 450 kWh?<br>
+    (c) Find the 90th percentile of usage.<br><br>
+    Normal values: $\Phi(1) = 0.8413$, $\Phi(2) = 0.9772$, $\Phi(1.28) = 0.90$.
+  </div>
+
+  <div class="example">
+    <span class="label">Solution</span>
+
+    $\mu = 350$, $\sigma = \sqrt{2500} = 50$.
+
+    <p><strong>(a) $P(X > 400)$.</strong> Standardize: $Z = (400 - 350)/50 = 1$.</p>
+    $$P(X > 400) = P(Z > 1) = 1 - \Phi(1) = 1 - 0.8413 = \mathbf{0.1587}$$
+    About <strong>15.87%</strong>.
+
+    <p><strong>(b) $P(300 \le X \le 450)$.</strong></p>
+    Standardize both endpoints: $Z_1 = (300 - 350)/50 = -1$, $Z_2 = (450 - 350)/50 = 2$.
+    $$P(-1 \le Z \le 2) = \Phi(2) - \Phi(-1) = \Phi(2) - [1 - \Phi(1)] = 0.9772 - 0.1587 = \mathbf{0.8185}$$
+    About <strong>81.85%</strong>.
+
+    <p><strong>(c) 90th percentile.</strong> Need $x_{0.9}$ with $P(X \le x_{0.9}) = 0.90$.</p>
+    Find the standard-normal 90th percentile: $\Phi(z) = 0.90 \Rightarrow z = 1.28$.
+    $$x_{0.9} = \mu + z \sigma = 350 + 1.28(50) = \mathbf{414} \text{ kWh}$$
+  </div>
+</section>
+
+<!-- CHEBYSHEV EXAM -->
+<section class="section" id="exam-chebyshev">
+  <h2 style="margin-top:0">Chebyshev's inequality — full problem</h2>
+
+  <div class="example">
+    <span class="label">Problem</span>
+    A random variable $X$ has mean $\mu = 100$ and standard deviation $\sigma = 20$. Nothing else is known about its distribution.<br><br>
+    (a) Find a lower bound for $P(60 < X < 140)$.<br>
+    (b) Find an upper bound for $P(|X - 100| \ge 50)$.<br>
+    (c) At least what percent of the time is $X$ within $\pm 3\sigma$ of its mean, regardless of distribution?<br>
+    (d) If we additionally know $X$ is normal, re-answer (c).
+  </div>
+
+  <div class="example">
+    <span class="label">Solution</span>
+
+    <p><strong>(a)</strong> The interval $60 < X < 140$ means $|X - 100| < 40 = 2\sigma$, so $k = 2$.</p>
+    $$P(|X - 100| < 2\sigma) \ge 1 - \frac{1}{2^2} = 1 - 0.25 = \mathbf{0.75}$$
+    At least 75% probability.
+
+    <p><strong>(b)</strong> $|X - 100| \ge 50 = 2.5\sigma$, so $k = 2.5$.</p>
+    $$P(|X - 100| \ge 2.5 \sigma) \le \frac{1}{2.5^2} = \frac{1}{6.25} = \mathbf{0.16}$$
+    At most 16% probability.
+
+    <p><strong>(c)</strong> For $k = 3$:
+    $$P(|X - \mu| < 3\sigma) \ge 1 - 1/9 \approx \mathbf{88.9\%}$$
+    </p>
+
+    <p><strong>(d)</strong> If $X$ is normal, the 68–95–99.7 rule gives $P(|X - \mu| < 3\sigma) \approx \mathbf{99.7\%}$. Much tighter than Chebyshev's 88.9% — because Chebyshev has to work for any distribution.</p>
+  </div>
+</section>
+
+<section class="section">
+  <h2 style="margin-top:0">How to use this page</h2>
+  <ol>
+    <li><strong>MGF derivations:</strong> try each one with the book closed, then compare. The patterns repeat (geometric series, exponential series, binomial theorem, completing the square).</li>
+    <li><strong>Exam-style problems:</strong> write out a full solution yourself, then compare line by line. Pay attention to <em>why</em> each formula is used — that's what the exam tests.</li>
+    <li>Weak spot? Jump back to the chapter (<a href="chapter1.html">Ch 1</a>, <a href="chapter2.html">Ch 2</a>, <a href="chapter3.html">Ch 3</a>) and re-read that section.</li>
+  </ol>
+</section>
+
+</div>
+</div>
+</main>
+
+<footer>Built for MATH 2411 · HKUST Fall 2026</footer>
+
+</body>
+</html>
