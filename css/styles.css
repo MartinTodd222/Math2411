@@ -617,22 +617,36 @@ mark.hl { background: var(--mark-soft); color: var(--ink); padding: 0 3px; }
 
 /* ======== SVG visuals ======== */
 .visual {
-  margin: 16px 0;
-  padding: 14px;
+  margin: 24px 0;
+  padding: 20px 16px;
   background: var(--panel);
   border: 1px solid var(--line);
   border-radius: 8px;
   text-align: center;
 }
 .visual svg {
-  max-width: 100%;
+  width: 100%;
+  max-width: 820px;
   height: auto;
   display: block;
   margin: 0 auto;
 }
 .visual .caption {
-  margin-top: 8px;
-  font-size: 0.85rem;
+  margin-top: 12px;
+  font-size: 0.9rem;
   color: var(--muted);
   font-style: italic;
+  line-height: 1.5;
+}
+.visual-pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin: 24px 0;
+}
+@media (max-width: 700px) {
+  .visual-pair { grid-template-columns: 1fr; }
+}
+.visual-pair .visual {
+  margin: 0;
 }

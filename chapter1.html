@@ -215,39 +215,41 @@
     The failed Challenger launch at 29°F was a clear outlier.
 
     <div class="visual">
-      <svg viewBox="0 0 640 160" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Boxplot of Challenger launch temperatures">
-        <!-- axis -->
-        <line x1="40" y1="130" x2="600" y2="130" stroke="currentColor" stroke-width="1.5"/>
-        <!-- tick marks: scale 20°F to 90°F maps to 40-600 -->
-        <!-- 20→40, 90→600, so x = 40 + (t-20) * 560/70 = 40 + (t-20)*8 -->
-        <g font-size="11" text-anchor="middle" fill="currentColor">
-          <line x1="40" y1="130" x2="40" y2="135" stroke="currentColor"/><text x="40" y="150">20</text>
-          <line x1="120" y1="130" x2="120" y2="135" stroke="currentColor"/><text x="120" y="150">30</text>
-          <line x1="200" y1="130" x2="200" y2="135" stroke="currentColor"/><text x="200" y="150">40</text>
-          <line x1="280" y1="130" x2="280" y2="135" stroke="currentColor"/><text x="280" y="150">50</text>
-          <line x1="360" y1="130" x2="360" y2="135" stroke="currentColor"/><text x="360" y="150">60</text>
-          <line x1="440" y1="130" x2="440" y2="135" stroke="currentColor"/><text x="440" y="150">70</text>
-          <line x1="520" y1="130" x2="520" y2="135" stroke="currentColor"/><text x="520" y="150">80</text>
-          <line x1="600" y1="130" x2="600" y2="135" stroke="currentColor"/><text x="600" y="150">90 °F</text>
+      <svg viewBox="0 0 820 280" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Boxplot of Challenger launch temperatures">
+        <!-- axis: 20 to 90°F maps to x=60 to 780 -->
+        <!-- scale: x = 60 + (t-20) * 720/70 ≈ 60 + (t-20)*10.286 -->
+        <line x1="60" y1="210" x2="780" y2="210" stroke="currentColor" stroke-width="2"/>
+        <g font-size="16" text-anchor="middle" fill="currentColor">
+          <line x1="60"  y1="210" x2="60"  y2="218" stroke="currentColor" stroke-width="2"/><text x="60"  y="240">20</text>
+          <line x1="163" y1="210" x2="163" y2="218" stroke="currentColor" stroke-width="2"/><text x="163" y="240">30</text>
+          <line x1="266" y1="210" x2="266" y2="218" stroke="currentColor" stroke-width="2"/><text x="266" y="240">40</text>
+          <line x1="369" y1="210" x2="369" y2="218" stroke="currentColor" stroke-width="2"/><text x="369" y="240">50</text>
+          <line x1="471" y1="210" x2="471" y2="218" stroke="currentColor" stroke-width="2"/><text x="471" y="240">60</text>
+          <line x1="574" y1="210" x2="574" y2="218" stroke="currentColor" stroke-width="2"/><text x="574" y="240">70</text>
+          <line x1="677" y1="210" x2="677" y2="218" stroke="currentColor" stroke-width="2"/><text x="677" y="240">80</text>
+          <line x1="780" y1="210" x2="780" y2="218" stroke="currentColor" stroke-width="2"/><text x="780" y="240">90 °F</text>
         </g>
-        <!-- box: Q1=66.5 → 40+46.5*8=412, Q3=75.5 → 40+55.5*8=484 -->
-        <rect x="412" y="50" width="72" height="50" fill="#e8eff8" stroke="#2c5282" stroke-width="2"/>
-        <!-- median=70 → 40+50*8=440 -->
-        <line x1="440" y1="50" x2="440" y2="100" stroke="#2c5282" stroke-width="3"/>
-        <!-- whiskers: lower non-outlier = 57 → 40+37*8=336, upper non-outlier = 81 → 40+61*8=528 -->
-        <line x1="336" y1="75" x2="412" y2="75" stroke="#2c5282" stroke-width="1.5"/>
-        <line x1="336" y1="60" x2="336" y2="90" stroke="#2c5282" stroke-width="1.5"/>
-        <line x1="484" y1="75" x2="528" y2="75" stroke="#2c5282" stroke-width="1.5"/>
-        <line x1="528" y1="60" x2="528" y2="90" stroke="#2c5282" stroke-width="1.5"/>
-        <!-- outliers: 29 → 40+9*8=112, 53 → 40+33*8=304 -->
-        <circle cx="112" cy="75" r="5" fill="#c53030"/>
-        <circle cx="304" cy="75" r="5" fill="#c53030"/>
-        <text x="112" y="35" text-anchor="middle" font-size="11" fill="#c53030" font-weight="bold">29 (Challenger)</text>
-        <text x="304" y="35" text-anchor="middle" font-size="11" fill="#c53030">53</text>
+        <!-- box: Q1=66.5 → 60 + 46.5*10.286 = 538, Q3=75.5 → 60 + 55.5*10.286 = 631 -->
+        <rect x="538" y="85" width="93" height="80" fill="#e8eff8" stroke="#2c5282" stroke-width="2.5"/>
+        <!-- median=70 → 60 + 50*10.286 = 574 -->
+        <line x1="574" y1="85" x2="574" y2="165" stroke="#2c5282" stroke-width="4"/>
+        <!-- whiskers: lower non-outlier = 57 → 60 + 37*10.286 = 441, upper non-outlier = 81 → 60 + 61*10.286 = 687 -->
+        <line x1="441" y1="125" x2="538" y2="125" stroke="#2c5282" stroke-width="2"/>
+        <line x1="441" y1="105" x2="441" y2="145" stroke="#2c5282" stroke-width="2"/>
+        <line x1="631" y1="125" x2="687" y2="125" stroke="#2c5282" stroke-width="2"/>
+        <line x1="687" y1="105" x2="687" y2="145" stroke="#2c5282" stroke-width="2"/>
+        <!-- outliers: 29 → 60 + 9*10.286 = 153, 53 → 60 + 33*10.286 = 400 -->
+        <circle cx="153" cy="125" r="8" fill="#c53030"/>
+        <circle cx="400" cy="125" r="8" fill="#c53030"/>
+        <text x="153" y="60" text-anchor="middle" font-size="16" fill="#c53030" font-weight="bold">29 (Challenger)</text>
+        <text x="400" y="60" text-anchor="middle" font-size="15" fill="#c53030">53</text>
+        <!-- fence line indicator -->
+        <line x1="400" y1="75" x2="400" y2="115" stroke="#c53030" stroke-width="1" stroke-dasharray="4,3"/>
+        <text x="400" y="90" text-anchor="middle" font-size="12" fill="#c53030" opacity="0.7">lower fence</text>
         <!-- labels -->
-        <text x="412" y="115" text-anchor="middle" font-size="10" fill="currentColor">Q₁=66.5</text>
-        <text x="440" y="40" text-anchor="middle" font-size="10" fill="currentColor">median=70</text>
-        <text x="484" y="115" text-anchor="middle" font-size="10" fill="currentColor">Q₃=75.5</text>
+        <text x="538" y="185" text-anchor="middle" font-size="14" fill="currentColor">Q₁=66.5</text>
+        <text x="574" y="78" text-anchor="middle" font-size="14" fill="currentColor" font-weight="bold">median=70</text>
+        <text x="631" y="185" text-anchor="middle" font-size="14" fill="currentColor">Q₃=75.5</text>
       </svg>
       <div class="caption">Boxplot of Challenger launch temperatures. The 29°F launch is far below the lower fence (53).</div>
     </div>
