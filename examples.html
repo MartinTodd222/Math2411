@@ -46,12 +46,17 @@
     <li><a href="#mgf-exponential">MGF: Exponential</a></li>
     <li><a href="#mgf-normal">MGF: Normal</a></li>
     <li><a href="#mgf-sums">Sums via MGF</a></li>
-    <li><a href="#exam-ch1">Exam-style Ch 1</a></li>
-    <li><a href="#exam-ch2">Exam-style Ch 2</a></li>
-    <li><a href="#exam-ch3-discrete">Exam-style Ch 3 (discrete)</a></li>
-    <li><a href="#exam-ch3-continuous">Exam-style Ch 3 (continuous)</a></li>
-    <li><a href="#exam-ch3-normal">Exam-style Ch 3 (normal)</a></li>
-    <li><a href="#exam-chebyshev">Chebyshev example</a></li>
+    <li><a href="#exam-ch1">Ch 1 — descriptive</a></li>
+    <li><a href="#exam-ch1-2">Ch 1 — linear transform</a></li>
+    <li><a href="#exam-ch1-3">Ch 1 — compare groups</a></li>
+    <li><a href="#exam-ch2">Ch 2 — Bayes + counting</a></li>
+    <li><a href="#exam-ch2-2">Ch 2 — card hands</a></li>
+    <li><a href="#exam-ch2-3">Ch 2 — probability tree</a></li>
+    <li><a href="#exam-ch2-4">Ch 2 — indep vs disjoint</a></li>
+    <li><a href="#exam-ch3-discrete">Ch 3 — discrete</a></li>
+    <li><a href="#exam-ch3-continuous">Ch 3 — continuous</a></li>
+    <li><a href="#exam-ch3-normal">Ch 3 — normal</a></li>
+    <li><a href="#exam-chebyshev">Chebyshev</a></li>
   </ul>
 </aside>
 
@@ -284,6 +289,84 @@
   </div>
 </section>
 
+<!-- CH1 EXAM 2 -->
+<section class="section" id="exam-ch1-2">
+  <h2 style="margin-top:0">Chapter 1 — linear transformation of data</h2>
+
+  <div class="example">
+    <span class="label">Problem</span>
+    A data set of exam scores (out of 50) has mean $\bar{x} = 38$ and standard deviation $s = 6$. The instructor wants to rescale scores to a 100-point scale and add 5 bonus points: $y_i = 2 x_i + 5$.<br><br>
+    (a) Find the new mean $\bar{y}$.<br>
+    (b) Find the new standard deviation $s_y$ and new variance $s_y^2$.<br>
+    (c) The median was $\tilde{x} = 37$. What is the new median?<br>
+    (d) An outlier was flagged at $x = 22$. Does $y = 2(22) + 5 = 49$ remain an outlier if the IQR becomes $2 \cdot IQR_x$?
+  </div>
+
+  <div class="example">
+    <span class="label">Solution</span>
+    This is the linear-transformation rule for data (same as $E/\mathrm{Var}$ for r.v.): shift adds to the mean, scale multiplies both mean and sd.
+
+    <p><strong>(a)</strong> $\bar{y} = 2\bar{x} + 5 = 2(38) + 5 = \mathbf{81}$.</p>
+
+    <p><strong>(b)</strong> Shift (+5) does not change spread; scale (×2) multiplies sd by $|2| = 2$:
+    $$s_y = 2 \cdot 6 = \mathbf{12}, \quad s_y^2 = 4 \cdot 36 = \mathbf{144}$$</p>
+
+    <p><strong>(c)</strong> The transformation is monotonic increasing, so the ordering of the data is preserved. The median transforms the same way:
+    $$\tilde{y} = 2(37) + 5 = \mathbf{79}$$</p>
+
+    <p><strong>(d)</strong> Quartiles and IQR scale by $|2|$ (and shift by +5, which cancels in $Q_3 - Q_1$). The fence formulas scale by 2:
+    $$\text{new upper fence} = (2 Q_3 + 5) + 1.5 \cdot (2 \, IQR_x) = 2 \cdot (Q_3 + 1.5 \, IQR_x) + 5$$
+    So if $x = 22$ was an outlier for the original data, $y = 49$ is still an outlier after the transformation — <strong>linear transformation preserves outlier status</strong>.</p>
+  </div>
+</section>
+
+<!-- CH1 EXAM 3 -->
+<section class="section" id="exam-ch1-3">
+  <h2 style="margin-top:0">Chapter 1 — comparing two groups via boxplot</h2>
+
+  <div class="example">
+    <span class="label">Problem</span>
+    Two sections of the same course report their midterm scores:<br><br>
+    <strong>Section A (n = 10):</strong> 58, 65, 68, 70, 72, 75, 78, 80, 85, 90<br>
+    <strong>Section B (n = 10):</strong> 40, 60, 68, 72, 74, 75, 76, 78, 92, 95<br><br>
+    (a) Find the five-number summary (min, $Q_1$, median, $Q_3$, max) for each section.<br>
+    (b) Compute the IQR for each. Which section is more spread out?<br>
+    (c) Identify any outliers in each section.<br>
+    (d) Which section would you say performed "more consistently"? Why?
+  </div>
+
+  <div class="example">
+    <span class="label">Solution</span>
+
+    Both sections have $n = 10$. For each $p \in \{0.25, 0.5, 0.75\}$: $np + 0.5$ is $3, 5.5, 8$ respectively — so $Q_1$ is the 3rd value (wait, $10(0.25) + 0.5 = 3$ is an integer, so $Q_1$ = 3rd value), $Q_2$ is the average of 5th and 6th, $Q_3$ is the 8th value.
+
+    <p><strong>(a) Five-number summaries.</strong></p>
+    <table>
+      <thead><tr><th></th><th>Min</th><th>$Q_1$ (3rd)</th><th>Median (avg 5th &amp; 6th)</th><th>$Q_3$ (8th)</th><th>Max</th></tr></thead>
+      <tbody>
+        <tr><td>Section A</td><td>58</td><td>68</td><td>(72+75)/2 = 73.5</td><td>80</td><td>90</td></tr>
+        <tr><td>Section B</td><td>40</td><td>68</td><td>(74+75)/2 = 74.5</td><td>78</td><td>95</td></tr>
+      </tbody>
+    </table>
+
+    <p><strong>(b) IQR.</strong></p>
+    <ul>
+      <li>A: $IQR = 80 - 68 = \mathbf{12}$</li>
+      <li>B: $IQR = 78 - 68 = \mathbf{10}$</li>
+    </ul>
+    Section A has larger IQR — the middle 50% is more spread out. But look at the full range: A is 90−58 = 32, B is 95−40 = 55. B is more spread overall.
+
+    <p><strong>(c) Outliers.</strong></p>
+    <ul>
+      <li>A: fences = $68 - 1.5(12) = 50$ and $80 + 1.5(12) = 98$. All data in $[50, 98]$ → <strong>no outliers</strong>.</li>
+      <li>B: fences = $68 - 1.5(10) = 53$ and $78 + 1.5(10) = 93$. Points at 40 and 95 are outside → <strong>40 (low) and 95 (high) are outliers</strong>.</li>
+    </ul>
+
+    <p><strong>(d) Which is more consistent?</strong></p>
+    Section A has slightly higher IQR (12 vs 10), <em>but</em> Section B has two outliers and a much larger total range (55 vs 32). <strong>Section A is more consistent</strong> — its scores cluster tightly without extreme points. B has a few students at the extremes pulling it apart.
+  </div>
+</section>
+
 <!-- CH2 EXAM -->
 <section class="section" id="exam-ch2">
   <h2 style="margin-top:0">Chapter 2 — full Bayes + counting problem</h2>
@@ -313,6 +396,124 @@
     $P(\text{not defective}) = 1 - 0.017 = 0.983$. With 5 independent selections,
     $$P(\text{all 5 non-defective}) = (0.983)^5 \approx 0.9178$$
     $$P(\text{at least one defective}) = 1 - 0.9178 = \mathbf{0.0822}$$
+  </div>
+</section>
+
+<!-- CH2 EXAM 2 -->
+<section class="section" id="exam-ch2-2">
+  <h2 style="margin-top:0">Chapter 2 — pure counting / combinations</h2>
+
+  <div class="example">
+    <span class="label">Problem</span>
+    A standard 52-card deck. You are dealt a 5-card hand.<br><br>
+    (a) How many 5-card hands are possible?<br>
+    (b) What is the probability of being dealt exactly 2 aces and 3 non-aces?<br>
+    (c) What is the probability of being dealt a <em>flush</em> (all 5 cards same suit, any ranks)?<br>
+    (d) What is the probability of being dealt <em>four of a kind</em> (four cards of the same rank + one other card)?
+  </div>
+
+  <div class="example">
+    <span class="label">Solution</span>
+
+    <p><strong>(a) Total hands.</strong> Order does not matter in a hand → combination:
+    $$\binom{52}{5} = \frac{52!}{5! \, 47!} = 2{,}598{,}960$$</p>
+
+    <p><strong>(b) Exactly 2 aces + 3 non-aces.</strong> Choose 2 of 4 aces, then 3 of 48 non-aces:
+    $$P = \frac{\binom{4}{2}\binom{48}{3}}{\binom{52}{5}} = \frac{6 \times 17{,}296}{2{,}598{,}960} = \frac{103{,}776}{2{,}598{,}960} \approx \mathbf{0.0399}$$</p>
+
+    <p><strong>(c) Flush (all same suit).</strong> Choose 1 of 4 suits, then 5 of 13 cards in that suit:
+    $$P = \frac{4 \cdot \binom{13}{5}}{\binom{52}{5}} = \frac{4 \cdot 1287}{2{,}598{,}960} = \frac{5148}{2{,}598{,}960} \approx \mathbf{0.00198}$$</p>
+
+    <p><strong>(d) Four of a kind.</strong> Choose the rank for the four (13 options), take all 4 cards of that rank ($\binom{4}{4} = 1$), then choose any 1 of the remaining 48 cards:
+    $$P = \frac{13 \cdot 1 \cdot 48}{\binom{52}{5}} = \frac{624}{2{,}598{,}960} \approx \mathbf{0.00024}$$</p>
+
+    <p>Flushes are ~8× more likely than four-of-a-kind, matching poker hand rankings.</p>
+  </div>
+</section>
+
+<!-- CH2 EXAM 3 -->
+<section class="section" id="exam-ch2-3">
+  <h2 style="margin-top:0">Chapter 2 — multi-step conditional / tree diagram</h2>
+
+  <div class="example">
+    <span class="label">Problem</span>
+    A bag has 3 red and 2 green balls. You draw 2 balls without replacement.<br><br>
+    (a) Draw the probability tree.<br>
+    (b) Find $P(\text{both red})$, $P(\text{both green})$, $P(\text{one of each})$.<br>
+    (c) Find $P(\text{2nd ball is red})$ using the law of total probability.<br>
+    (d) Given the 2nd ball is red, what is the probability the 1st was green?
+  </div>
+
+  <div class="example">
+    <span class="label">Solution</span>
+
+    Let $R_i$, $G_i$ = red or green on the $i$-th draw.
+
+    <p><strong>(a) Tree.</strong></p>
+    <pre style="font-family: monospace; font-size: 0.95em; background: var(--code-bg); padding: 12px; border-radius: 6px;">
+            P(R₁)=3/5          P(R₂|R₁)=2/4     → R₁R₂   P = (3/5)(2/4) = 6/20
+                ┌──────────────┤
+                │              P(G₂|R₁)=2/4     → R₁G₂   P = (3/5)(2/4) = 6/20
+                │
+                │              P(R₂|G₁)=3/4     → G₁R₂   P = (2/5)(3/4) = 6/20
+                └──────────────┤
+            P(G₁)=2/5          P(G₂|G₁)=1/4     → G₁G₂   P = (2/5)(1/4) = 2/20</pre>
+
+    <p><strong>(b)</strong></p>
+    <ul>
+      <li>$P(\text{both red}) = (3/5)(2/4) = \mathbf{6/20 = 0.30}$</li>
+      <li>$P(\text{both green}) = (2/5)(1/4) = \mathbf{2/20 = 0.10}$</li>
+      <li>$P(\text{one of each}) = (3/5)(2/4) + (2/5)(3/4) = \mathbf{12/20 = 0.60}$</li>
+    </ul>
+    Check: 0.30 + 0.10 + 0.60 = 1 ✓
+
+    <p><strong>(c) Law of total probability for the 2nd draw.</strong></p>
+    $$P(R_2) = P(R_2 | R_1) P(R_1) + P(R_2 | G_1) P(G_1) = \frac{2}{4} \cdot \frac{3}{5} + \frac{3}{4} \cdot \frac{2}{5} = \frac{6}{20} + \frac{6}{20} = \mathbf{\frac{12}{20} = \frac{3}{5}}$$
+    <strong>Note:</strong> this equals the original proportion of red! The "drawing balls in sequence" symmetry — the probability the 2nd ball is red doesn't depend on when you draw.
+
+    <p><strong>(d) Bayes.</strong></p>
+    $$P(G_1 | R_2) = \frac{P(R_2 | G_1) P(G_1)}{P(R_2)} = \frac{(3/4)(2/5)}{3/5} = \frac{6/20}{12/20} = \mathbf{\frac{1}{2}}$$
+    Given the 2nd ball was red, there's a 50% chance the first was green.
+  </div>
+</section>
+
+<!-- CH2 EXAM 4 -->
+<section class="section" id="exam-ch2-4">
+  <h2 style="margin-top:0">Chapter 2 — independence vs disjoint</h2>
+
+  <div class="example">
+    <span class="label">Problem</span>
+    Events $A$ and $B$ have $P(A) = 0.5$, $P(B) = 0.3$.<br><br>
+    (a) If $A$ and $B$ are disjoint, find $P(A \cup B)$ and $P(A \cap B)$. Are they independent?<br>
+    (b) If $A$ and $B$ are independent, find $P(A \cap B)$ and $P(A \cup B)$.<br>
+    (c) If instead $P(A \cup B) = 0.65$, find $P(A \cap B)$ and determine whether $A, B$ are independent.<br>
+    (d) In case (c), find $P(A | B)$ and $P(B | A)$.
+  </div>
+
+  <div class="example">
+    <span class="label">Solution</span>
+
+    <p><strong>(a) Disjoint.</strong></p>
+    <ul>
+      <li>$P(A \cap B) = 0$ (no overlap)</li>
+      <li>$P(A \cup B) = P(A) + P(B) = 0.5 + 0.3 = 0.8$</li>
+      <li>For independence: $P(A)P(B) = 0.15 \ne 0 = P(A \cap B)$ → <strong>NOT independent</strong>. (If $A$ happens, $B$ can't → maximum dependence.)</li>
+    </ul>
+
+    <p><strong>(b) Independent.</strong></p>
+    <ul>
+      <li>$P(A \cap B) = P(A) P(B) = 0.5 \cdot 0.3 = 0.15$</li>
+      <li>$P(A \cup B) = 0.5 + 0.3 - 0.15 = 0.65$</li>
+    </ul>
+
+    <p><strong>(c) Given $P(A \cup B) = 0.65$.</strong></p>
+    By the addition rule: $P(A \cap B) = P(A) + P(B) - P(A \cup B) = 0.5 + 0.3 - 0.65 = 0.15$.<br>
+    Check independence: $P(A)P(B) = 0.15 = P(A \cap B)$ → <strong>independent</strong>.
+
+    <p><strong>(d) Conditional probabilities.</strong></p>
+    $$P(A | B) = \frac{P(A \cap B)}{P(B)} = \frac{0.15}{0.3} = 0.5 = P(A) \; ✓$$
+    $$P(B | A) = \frac{P(A \cap B)}{P(A)} = \frac{0.15}{0.5} = 0.3 = P(B) \; ✓$$
+    Confirms independence: knowing one event doesn't change the probability of the other.
   </div>
 </section>
 
