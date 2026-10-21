@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Chapter 3 · Random Variables — MATH 2411</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📈</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Newsreader:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+<script>
+  MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] } };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+</head>
+<body>
+
+<header class="top">
+  <div class="top-inner">
+    <div class="brand">MATH 2411 Midterm<small>HKUST · Fall 2026</small></div>
+    <nav class="chapternav">
+      <a href="index.html">Overview</a>
+      <a href="chapter1.html">Ch 1</a>
+      <a href="chapter2.html">Ch 2</a>
+      <a href="chapter3.html" class="active">Ch 3</a>
+      <a href="formulas.html">Formulas</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+<div class="chapter-layout">
+<aside class="chapter-sidebar">
+  <h4>In this chapter</h4>
+  <ul>
+    <li><a href="#rv">What is a random variable?</a></li>
+    <li><a href="#pmf">Probability mass function (pmf)</a></li>
+    <li><a href="#cdf">Cumulative distribution function (cdf)</a></li>
+    <li><a href="#expectation">Expectation E(X)</a></li>
+    <li><a href="#variance">Variance Var(X)</a></li>
+    <li><a href="#linearity">Linearity rules</a></li>
+    <li><a href="#recipe">Problem recipe</a></li>
+    <li><a href="#examples">Worked examples</a></li>
+    <li><a href="#pitfalls">Pitfalls</a></li>
+  </ul>
+</aside>
+
+<div>
+
+<h1>Chapter 3 — Random Variables (3.1–3.2)</h1>
+<p class="lede">Translating outcomes into numbers. Discrete random variables, their distributions, means and variances — and the linearity rules that make computations painless.</p>
+
+<!-- ======== RV ======== -->
+<section class="section" id="rv">
+  <h2 style="margin-top:0">3.1 Random variables</h2>
+
+  <div class="definition">
+    <span class="label">Definition</span>
+    A <strong>random variable</strong> $X: S \to \mathbb{R}$ is a function from the sample space to the real line: it assigns a number $X(s)$ to each outcome $s \in S$.
+  </div>
+
+  <ul>
+    <li>Capital letters ($X, Y, Z$) for random variables; lowercase ($x, y, z$) for their <em>realizations</em>.</li>
+    <li>Always remember: <mark class="hl">an r.v. is a function, not a number</mark>.</li>
+    <li>Statements about $X$ translate into events in $S$:
+      $$\{X = x\} = \{s \in S \mid X(s) = x\}, \qquad P(X = x) = P(\{s \in S \mid X(s) = x\})$$
+    </li>
+  </ul>
+
+  <h3>Two types of r.v.</h3>
+  <table>
+    <thead><tr><th></th><th>Discrete</th><th>Continuous</th></tr></thead>
+    <tbody>
+      <tr><td>Range</td><td>Finite or countably infinite</td><td>An interval of ℝ</td></tr>
+      <tr><td>Source</td><td>Counting</td><td>Measuring</td></tr>
+      <tr><td>Examples</td><td>Number of defectives, number of tosses to first H</td><td>Weight, time to failure</td></tr>
+      <tr><td>Described by</td><td>pmf $p(x)$</td><td>density $f(x)$ (Section 3.3, not on midterm)</td></tr>
+    </tbody>
+  </table>
+
+  <p>The midterm covers <strong>discrete</strong> random variables only.</p>
+</section>
+
+<!-- ======== PMF ======== -->
+<section class="section" id="pmf">
+  <h2 style="margin-top:0">3.2 Probability mass function (pmf)</h2>
+
+  <div class="definition">
+    <span class="label">Definition</span>
+    The <strong>pmf</strong> of a discrete r.v. $X$ with range $\chi$ is
+    $$p(x) = P(X = x)$$
+    with the two defining properties:
+    <ol>
+      <li>$0 < p(x) \le 1$ for $x \in \chi$, and $p(x) = 0$ for $x \notin \chi$.</li>
+      <li>$\displaystyle \sum_{x \in \chi} p(x) = 1$.</li>
+    </ol>
+  </div>
+
+  <p>The probability that $X$ lies in a set $A \subseteq \mathbb{R}$ is
+    $$P(X \in A) = \sum_{x \in A} p(x),$$
+  summing only over the <em>possible</em> values in $A$.</p>
+
+  <div class="pitfall">
+    <span class="label">Pitfall — &lt; vs. ≤</span>
+    For discrete r.v.'s, whether an endpoint is included <mark class="hl">matters</mark> whenever it is a possible value. $P(X < 3) \ne P(X \le 3)$ when $3$ is a possible value — they differ by exactly $p(3)$.
+  </div>
+
+  <div class="example">
+    <span class="label">Worked example — sum of two dice</span>
+    $X$ = sum of two fair dice. Possible values 2 to 12.
+    $$p(x) = \frac{6 - |x - 7|}{36}, \quad x = 2, \ldots, 12$$
+    So $p(2) = p(12) = 1/36$, ..., $p(7) = 6/36$. The pmf is symmetric about 7.
+  </div>
+</section>
+
+<!-- ======== CDF ======== -->
+<section class="section" id="cdf">
+  <h2 style="margin-top:0">Cumulative distribution function (cdf)</h2>
+
+  <div class="definition">
+    <span class="label">Definition</span>
+    $$F(x) = P(X \le x) \quad \text{for all real } x$$
+    For a discrete r.v., $F(a) = \sum_{x \le a} p(x)$.
+  </div>
+
+  <h3>Properties of the cdf</h3>
+  <ul>
+    <li>$F$ is <strong>non-decreasing</strong>, with $\lim_{x \to -\infty} F(x) = 0$ and $\lim_{x \to \infty} F(x) = 1$.</li>
+    <li>For a discrete r.v., $F$ is a <strong>step function</strong>: it jumps at each possible value, and the jump size at $a$ equals $p(a)$.</li>
+    <li>Each step is <strong>closed on the left, open on the right</strong> ($F$ is right-continuous).</li>
+    <li><strong>From cdf back to pmf:</strong> if the range is $x_1 < x_2 < \cdots$, then
+      $$p(x_j) = F(x_j) - F(x_{j-1}), \quad p(x_1) = F(x_1).$$
+    </li>
+  </ul>
+
+  <div class="key-points">
+    <h4>Interval probability using the cdf</h4>
+    For any $a < b$:
+    $$P(a < X \le b) = F(b) - F(a)$$
+    This formula applies <strong>only</strong> to $a < X \le b$ (strict less-than on the left, less-or-equal on the right). For other combinations, convert:
+    <table style="margin-top: 10px;">
+      <thead><tr><th>Probability</th><th>In terms of F</th></tr></thead>
+      <tbody>
+        <tr><td>$P(X \le b)$</td><td>$F(b)$</td></tr>
+        <tr><td>$P(X < b)$</td><td>$F(b) - p(b)$</td></tr>
+        <tr><td>$P(X > a)$</td><td>$1 - F(a)$</td></tr>
+        <tr><td>$P(X \ge a)$</td><td>$1 - F(a) + p(a)$</td></tr>
+        <tr><td>$P(a < X \le b)$</td><td>$F(b) - F(a)$</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="example">
+    <span class="label">Worked example — pmf → cdf</span>
+    Given $p(1) = 0.3$, $p(2) = 0.2$, $p(3) = 0.5$:
+    $$F(x) = \begin{cases} 0, & x < 1 \\ 0.3, & 1 \le x < 2 \\ 0.5, & 2 \le x < 3 \\ 1, & x \ge 3 \end{cases}$$
+    Then $P(0.5 < X \le 2) = F(2) - F(0.5) = 0.5 - 0 = 0.5$, and $P(0.5 < X < 2) = p(1) = 0.3$ (only 1 is in the open interval).
+  </div>
+</section>
+
+<!-- ======== EXPECTATION ======== -->
+<section class="section" id="expectation">
+  <h2 style="margin-top:0">Expectation (population mean)</h2>
+
+  <div class="definition">
+    <span class="label">Definition</span>
+    For a discrete r.v. $X$ with pmf $p(x)$ and range $\chi$:
+    $$\mu = E(X) = \sum_{x \in \chi} x \, p(x)$$
+    This is a <strong>weighted average</strong> of the possible values, with the probabilities as weights.
+  </div>
+
+  <ul>
+    <li>$E(X)$ is a <strong>number</strong>, not random.</li>
+    <li>It is the <em>population</em> mean of the model, not the sample mean $\bar{x}$ of data.</li>
+    <li>It need not be a possible value (one die: $E(X) = 3.5$).</li>
+    <li>Physical interpretation: the balance point of the pmf.</li>
+  </ul>
+
+  <div class="definition">
+    <span class="label">Expectation of a function</span>
+    For any real function $g$:
+    $$E[g(X)] = \sum_{x \in \chi} g(x) \, p(x)$$
+    You do <strong>not</strong> need to find the distribution of $g(X)$ first — just plug $g(x)$ into the sum.
+  </div>
+</section>
+
+<!-- ======== VARIANCE ======== -->
+<section class="section" id="variance">
+  <h2 style="margin-top:0">Variance and standard deviation</h2>
+
+  <div class="definition">
+    <span class="label">Definition</span>
+    $$\mathrm{Var}(X) = \sigma^2 = \sum_{x \in \chi} (x - \mu)^2 \, p(x) = E[(X - \mu)^2]$$
+    The standard deviation is $\sigma = \sqrt{\sigma^2}$.
+  </div>
+
+  <div class="definition">
+    <span class="label">Computational formula (use this one!)</span>
+    $$\boxed{\mathrm{Var}(X) = E(X^2) - [E(X)]^2 = E(X^2) - \mu^2}$$
+    Usually much faster than the definition. Proof: expand $(X - \mu)^2 = X^2 - 2\mu X + \mu^2$ and take expectations.
+  </div>
+
+  <div class="pitfall">
+    <span class="label">Pitfall</span>
+    <ul style="margin-bottom: 0;">
+      <li>$\mathrm{Var}(X) \ge 0$ always. If you get a negative number, you made an arithmetic error.</li>
+      <li>$E(X^2) \ne [E(X)]^2$ in general — their difference <em>is</em> the variance, so $E(X^2) \ge [E(X)]^2$.</li>
+      <li>$\mathrm{Var}(-X) = \mathrm{Var}(X)$, not $-\mathrm{Var}(X)$.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ======== LINEARITY ======== -->
+<section class="section" id="linearity">
+  <h2 style="margin-top:0">Linearity rules — the exam gold</h2>
+
+  <div class="key-points">
+    <h4>Expectation rules (always true)</h4>
+    <ul>
+      <li>$E(b) = b$ for a constant $b$</li>
+      <li>$E(aX) = a \, E(X)$</li>
+      <li>$E(aX + b) = a \, E(X) + b$</li>
+      <li>$E(X + Y) = E(X) + E(Y)$ — <strong>independence not required</strong></li>
+    </ul>
+  </div>
+
+  <div class="key-points">
+    <h4>Variance rules</h4>
+    <ul>
+      <li>$\mathrm{Var}(b) = 0$</li>
+      <li>$\mathrm{Var}(aX + b) = a^2 \, \mathrm{Var}(X)$ — shifting by $b$ doesn't change spread</li>
+      <li>$\mathrm{sd}(aX + b) = |a| \cdot \sigma$</li>
+      <li>$\mathrm{Var}(X + Y) = \mathrm{Var}(X) + \mathrm{Var}(Y)$ <strong>only if $X$ and $Y$ are independent</strong></li>
+      <li>Even for independent $X, Y$: $\mathrm{Var}(X - Y) = \mathrm{Var}(X) + \mathrm{Var}(Y)$ (plus!) because $\mathrm{Var}(-Y) = \mathrm{Var}(Y)$</li>
+    </ul>
+  </div>
+
+  <div class="definition">
+    <span class="label">Independence of random variables</span>
+    $X$ and $Y$ are independent if
+    $$P(X \le x, Y \le y) = P(X \le x) \cdot P(Y \le y) \quad \text{for all } x, y.$$
+  </div>
+</section>
+
+<!-- ======== RECIPE ======== -->
+<section class="section" id="recipe">
+  <h2 style="margin-top:0">Problem recipe for discrete r.v.</h2>
+  <ol>
+    <li><strong>Range:</strong> list the possible values $\chi$.</li>
+    <li><strong>pmf:</strong> find $p(x)$ for each value — usually with counting (Ch 2.3), the multiplication rule (Ch 2.4), or independence (Ch 2.5).</li>
+    <li><strong>Check:</strong> $\sum p(x) = 1$. If the pmf has an unknown constant, solve for it here.</li>
+    <li><strong>Probabilities:</strong> sum $p(x)$ over the right values, or use $F(b) - F(a)$ — watch $<$ vs $\le$.</li>
+    <li><strong>cdf:</strong> cumulative sums, written as a piecewise step function ($\le$ on the left, $<$ on the right of each interval).</li>
+    <li><strong>Moments:</strong>
+      $$E(X) = \sum x \, p(x), \quad E(X^2) = \sum x^2 \, p(x), \quad \mathrm{Var}(X) = E(X^2) - [E(X)]^2$$
+    </li>
+    <li><strong>Transformations:</strong> for $aX + b$, use the linearity rules — don't recompute.</li>
+    <li><strong>Sums:</strong> $E$ of a sum is always the sum of $E$'s; for variance, check independence.</li>
+  </ol>
+</section>
+
+<!-- ======== EXAMPLES ======== -->
+<section class="section" id="examples">
+  <h2 style="margin-top:0">Worked examples</h2>
+
+  <h3>A — Finding a missing constant</h3>
+  <div class="example">
+    <span class="label">Example</span>
+    $X$ has pmf $p(x) = c\,x$ for $x = 1, 2, 3, 4$. Find $c$, $E(X)$, $\mathrm{Var}(X)$.
+    <ul>
+      <li>$c(1+2+3+4) = 10c = 1 \Rightarrow c = 1/10$</li>
+      <li>$E(X) = (1 + 4 + 9 + 16)/10 = 3$</li>
+      <li>$E(X^2) = (1 + 8 + 27 + 64)/10 = 10$</li>
+      <li>$\mathrm{Var}(X) = 10 - 9 = 1$</li>
+    </ul>
+    Transformations: $E(3X - 2) = 3(3) - 2 = 7$ and $\mathrm{Var}(3X - 2) = 9 \cdot 1 = 9$.
+  </div>
+
+  <h3>B — Sampling defective items (pmf from counting)</h3>
+  <div class="example">
+    <span class="label">Example</span>
+    Box of 10 items, 3 defective. Choose 3 at random without replacement; $X$ = number of defectives.
+    $$p(x) = \frac{\binom{3}{x}\binom{7}{3-x}}{\binom{10}{3}} = \frac{\binom{3}{x}\binom{7}{3-x}}{120}$$
+    <table>
+      <thead><tr><th>$x$</th><th>0</th><th>1</th><th>2</th><th>3</th></tr></thead>
+      <tbody>
+        <tr><td>$p(x)$</td><td>35/120</td><td>63/120</td><td>21/120</td><td>1/120</td></tr>
+      </tbody>
+    </table>
+    <ul>
+      <li>$E(X) = 108/120 = 0.9$ ✓ (sanity: $3 \times 0.3 = 0.9$)</li>
+      <li>$E(X^2) = 156/120 = 1.3$, $\mathrm{Var}(X) = 1.3 - 0.81 = 0.49$, $\sigma = 0.7$</li>
+    </ul>
+  </div>
+
+  <h3>C — Finding the pmf via the cdf (max of two dice)</h3>
+  <div class="example">
+    <span class="label">Example</span>
+    $M$ = larger of two fair dice. "$M \le m$" means <em>both</em> dice are $\le m$:
+    $$F(m) = \frac{m}{6} \cdot \frac{m}{6} = \frac{m^2}{36}, \quad m = 1, \ldots, 6$$
+    pmf from the jumps:
+    $$p(m) = F(m) - F(m-1) = \frac{2m - 1}{36}$$
+    $$E(M) = \frac{161}{36} \approx 4.47$$
+    <strong>Lesson:</strong> for "largest" or "at most" problems, find the cdf first.
+  </div>
+
+  <h3>D — Insurance (expected profit)</h3>
+  <div class="example">
+    <span class="label">Example</span>
+    Premium $500. During the year: 2% chance of a $10{,}000 claim, 3% chance of a $5{,}000 claim, otherwise none. Profit $Y = 500 - C$.
+    <ul>
+      <li>$E(C) = 10000(0.02) + 5000(0.03) = \$350$</li>
+      <li>$E(Y) = 500 - 350 = \$150$</li>
+      <li>$E(C^2) = 10000^2(0.02) + 5000^2(0.03) = 2{,}750{,}000$</li>
+      <li>$\mathrm{Var}(C) = 2{,}750{,}000 - 350^2 = 2{,}627{,}500$, sd ≈ $1621</li>
+      <li>$\mathrm{Var}(Y) = (-1)^2 \mathrm{Var}(C) = 2{,}627{,}500$</li>
+    </ul>
+    Expected profit $150, but very volatile per policy.
+  </div>
+
+  <h3>E — Unknown probabilities from a given mean</h3>
+  <div class="example">
+    <span class="label">Example</span>
+    $X \in \{0, 1, 2, 3\}$ with $p(0) = 0.1$, $p(1) = a$, $p(2) = b$, $p(3) = 0.2$, $E(X) = 1.6$.
+    Two equations:
+    $$a + b = 0.7 \qquad a + 2b = 1$$
+    Subtracting: $b = 0.3$, $a = 0.4$. Then $E(X^2) = 0.4 + 1.2 + 1.8 = 3.4$, $\mathrm{Var}(X) = 3.4 - 2.56 = 0.84$.
+  </div>
+
+  <h3>F — Indicator variables (powerful trick)</h3>
+  <div class="example">
+    <span class="label">Example</span>
+    For any event $A$, define $I_A = 1$ if $A$ occurs, 0 otherwise. Then:
+    $$E(I_A) = P(A), \quad E(I_A^2) = P(A), \quad \mathrm{Var}(I_A) = P(A)[1 - P(A)]$$
+    <strong>Counts are sums of indicators.</strong> Toss a fair coin 3 times, $X$ = heads $= I_1 + I_2 + I_3$:
+    $$E(X) = 3 \cdot \tfrac{1}{2} = 1.5, \quad \mathrm{Var}(X) = 3 \cdot \tfrac{1}{2} \cdot \tfrac{1}{2} = 0.75$$
+    (tosses are independent).
+  </div>
+
+  <h3>G — Standardization</h3>
+  <div class="example">
+    <span class="label">Example</span>
+    For any r.v. with mean $\mu$ and sd $\sigma > 0$, the <strong>standardized</strong> variable is
+    $$Z = \frac{X - \mu}{\sigma}$$
+    Then $E(Z) = 0$ and $\mathrm{Var}(Z) = 1$. $Z$ measures "how many sds $X$ is from its mean".
+  </div>
+
+  <h3>H — Salesperson (shortcut via linearity)</h3>
+  <div class="example">
+    <span class="label">Example</span>
+    Two independent appointments. First: 70% chance of $1000 commission; second: 40% chance of $1500. Expected commission?
+    <br><br>
+    <strong>Shortcut:</strong> let $X_1, X_2$ be the two commissions. $X = X_1 + X_2$ and
+    $$E(X) = E(X_1) + E(X_2) = 700 + 600 = \$1300$$
+    No need to find the full joint distribution. (Linearity of expectation doesn't need independence anyway.)
+  </div>
+</section>
+
+<!-- ======== PITFALLS ======== -->
+<section class="section" id="pitfalls">
+  <h2 style="margin-top:0">Chapter 3 pitfalls — the T/F traps</h2>
+  <ol>
+    <li>An r.v. is a <strong>function</strong>, not a number.</li>
+    <li>$P(X < 3) = P(X \le 3)$ — <strong>false</strong> for discrete r.v.'s whenever 3 is a possible value (they differ by $p(3)$).</li>
+    <li>The cdf is non-decreasing — it never <em>decreases</em>.</li>
+    <li>$E(X + Y) = E(X) + E(Y)$ — <strong>always true</strong>, independence not required.</li>
+    <li>$\mathrm{Var}(X - Y) = \mathrm{Var}(X) + \mathrm{Var}(Y)$ for independent $X, Y$ — <strong>plus</strong>, not minus.</li>
+    <li>$E(X)$ need not be a possible value (one die: 3.5).</li>
+    <li>$\mathrm{Var}(X) = 0 \Leftrightarrow X$ is a constant (takes one value with probability 1).</li>
+    <li>$\mu$ (population mean, a parameter) ≠ $\bar{x}$ (sample mean, a statistic).</li>
+    <li>$E(X^2) \ne [E(X)]^2$ in general — the difference is $\mathrm{Var}(X)$.</li>
+    <li>$\mathrm{Var}(aX + b) = a^2 \mathrm{Var}(X)$ — the shift $b$ drops out, and $a$ gets squared.</li>
+  </ol>
+</section>
+
+<p style="text-align: center; margin-top: 32px;">
+  <a href="formulas.html" class="card-link" style="display: inline-block; background: var(--accent); color: white; padding: 10px 24px; border-radius: 6px; font-weight: 600;">Formula sheet →</a>
+</p>
+
+</div>
+</div>
+</main>
+
+<footer>Built for the MATH 2411 midterm · HKUST Fall 2026</footer>
+
+</body>
+</html>

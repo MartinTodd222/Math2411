@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Formula sheet — MATH 2411 Midterm</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📝</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Newsreader:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+<script>
+  MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] } };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+</head>
+<body>
+
+<header class="top">
+  <div class="top-inner">
+    <div class="brand">MATH 2411 Midterm<small>HKUST · Fall 2026</small></div>
+    <nav class="chapternav">
+      <a href="index.html">Overview</a>
+      <a href="chapter1.html">Ch 1</a>
+      <a href="chapter2.html">Ch 2</a>
+      <a href="chapter3.html">Ch 3</a>
+      <a href="formulas.html" class="active">Formulas</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+<h1>Formula sheet</h1>
+<p class="lede">Everything in one place. Grouped by chapter. Last stop before the exam.</p>
+
+<section class="section">
+  <h2 style="margin-top:0">Descriptive statistics (Chapter 1)</h2>
+  <table>
+    <thead><tr><th>Measure</th><th>Formula</th></tr></thead>
+    <tbody>
+      <tr><td>Sample mean</td><td>$\bar{x} = \frac{1}{n}\sum x_i$</td></tr>
+      <tr><td>Median</td><td>$x_{((n+1)/2)}$ if $n$ odd; $\tfrac{1}{2}(x_{(n/2)} + x_{(n/2+1)})$ if $n$ even</td></tr>
+      <tr><td>Sample variance</td><td>$s^2 = \frac{1}{n-1}\sum (x_i - \bar{x})^2$ &nbsp;&nbsp;($n-1$ df)</td></tr>
+      <tr><td>Sample sd</td><td>$s = \sqrt{s^2}$</td></tr>
+      <tr><td>Range</td><td>$x_{\max} - x_{\min}$</td></tr>
+      <tr><td>Quartile $Q_p$ (course rule)</td><td>$np + 0.5$ integer $m \to$ $m$-th value; otherwise avg of $m$-th and $(m+1)$-th</td></tr>
+      <tr><td>IQR</td><td>$Q_3 - Q_1$</td></tr>
+      <tr><td>Outlier rule</td><td>$x \le Q_1 - 1.5 \cdot IQR$ or $x \ge Q_3 + 1.5 \cdot IQR$</td></tr>
+      <tr><td>Linear transformation</td><td>$\bar{y} = a\bar{x} + b$, &nbsp; $s_y = |a| s_x$</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section class="section">
+  <h2 style="margin-top:0">Probability (Chapter 2)</h2>
+  <table>
+    <thead><tr><th>Rule</th><th>Formula</th></tr></thead>
+    <tbody>
+      <tr><td>Axioms</td><td>$P(E) \ge 0$; $P(S) = 1$; countable additivity for disjoint events</td></tr>
+      <tr><td>Complement</td><td>$P(A^c) = 1 - P(A)$</td></tr>
+      <tr><td>Addition</td><td>$P(A \cup B) = P(A) + P(B) - P(A \cap B)$</td></tr>
+      <tr><td>Three events (inclusion–exclusion)</td><td>$\sum P(A_i) - \sum_{i<j} P(A_iA_j) + P(A_1A_2A_3)$</td></tr>
+      <tr><td>De Morgan</td><td>$(A \cap B)^c = A^c \cup B^c$; &nbsp; $(A \cup B)^c = A^c \cap B^c$</td></tr>
+      <tr><td>Equally likely outcomes</td><td>$P(E) = |E|/N$</td></tr>
+      <tr><td>Conditional</td><td>$P(A \mid B) = P(A \cap B)/P(B)$</td></tr>
+      <tr><td>Multiplication</td><td>$P(A \cap B) = P(A \mid B)P(B) = P(B \mid A)P(A)$</td></tr>
+      <tr><td>Total probability</td><td>$P(A) = \sum_i P(A \mid B_i) P(B_i)$</td></tr>
+      <tr><td>Bayes</td><td>$P(B_j \mid A) = \dfrac{P(A \mid B_j) P(B_j)}{\sum_i P(A \mid B_i) P(B_i)}$</td></tr>
+      <tr><td>Independence</td><td>$P(A \cap B) = P(A) P(B)$</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section class="section">
+  <h2 style="margin-top:0">Counting</h2>
+  <table>
+    <thead><tr><th>Situation</th><th>Count</th></tr></thead>
+    <tbody>
+      <tr><td>Multiplication principle</td><td>$m_1 \cdot m_2 \cdots m_n$</td></tr>
+      <tr><td>Permutations of $n$ distinct</td><td>$n!$</td></tr>
+      <tr><td>Ordered, $r$ of $n$</td><td>$\dfrac{n!}{(n-r)!}$</td></tr>
+      <tr><td>Circular arrangements of $n$</td><td>$(n-1)!$</td></tr>
+      <tr><td>Combinations $r$ of $n$</td><td>$\dbinom{n}{r} = \dfrac{n!}{r!(n-r)!}$</td></tr>
+      <tr><td>Partition into groups $n_1, \ldots, n_k$</td><td>$\dfrac{n!}{n_1! \cdots n_k!}$</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section class="section">
+  <h2 style="margin-top:0">Discrete random variables (Chapter 3)</h2>
+  <table>
+    <thead><tr><th>Quantity</th><th>Formula</th></tr></thead>
+    <tbody>
+      <tr><td>pmf</td><td>$p(x) = P(X = x)$; &nbsp;$p(x) \ge 0$, $\sum p(x) = 1$</td></tr>
+      <tr><td>Set probability</td><td>$P(X \in A) = \sum_{x \in A} p(x)$</td></tr>
+      <tr><td>cdf</td><td>$F(x) = P(X \le x) = \sum_{t \le x} p(t)$</td></tr>
+      <tr><td>Interval</td><td>$P(a < X \le b) = F(b) - F(a)$</td></tr>
+      <tr><td>cdf → pmf</td><td>$p(x_j) = F(x_j) - F(x_{j-1})$</td></tr>
+      <tr><td>Mean (expectation)</td><td>$\mu = E(X) = \sum x \, p(x)$</td></tr>
+      <tr><td>Expectation of a function</td><td>$E[g(X)] = \sum g(x) \, p(x)$</td></tr>
+      <tr><td>Variance (computational)</td><td>$\sigma^2 = E(X^2) - \mu^2$</td></tr>
+      <tr><td>Linearity of expectation</td><td>$E(aX + b) = aE(X) + b$; &nbsp; $E(X + Y) = E(X) + E(Y)$ (always)</td></tr>
+      <tr><td>Variance rules</td><td>$\mathrm{Var}(aX + b) = a^2 \mathrm{Var}(X)$; &nbsp; $\mathrm{Var}(X + Y) = \mathrm{Var}(X) + \mathrm{Var}(Y)$ (independent only)</td></tr>
+      <tr><td>Indicator variable</td><td>$E(I_A) = P(A)$, &nbsp; $\mathrm{Var}(I_A) = P(A)[1-P(A)]$</td></tr>
+      <tr><td>Standardization</td><td>$Z = (X - \mu)/\sigma$ has $E(Z) = 0$, $\mathrm{Var}(Z) = 1$</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section class="section">
+  <h2 style="margin-top:0">Interval probability conversions (discrete r.v.)</h2>
+  <table>
+    <thead><tr><th>Probability</th><th>In terms of F and p</th></tr></thead>
+    <tbody>
+      <tr><td>$P(X \le b)$</td><td>$F(b)$</td></tr>
+      <tr><td>$P(X < b)$</td><td>$F(b) - p(b)$</td></tr>
+      <tr><td>$P(X > a)$</td><td>$1 - F(a)$</td></tr>
+      <tr><td>$P(X \ge a)$</td><td>$1 - F(a) + p(a)$</td></tr>
+      <tr><td>$P(a < X \le b)$</td><td>$F(b) - F(a)$</td></tr>
+      <tr><td>$P(a \le X \le b)$</td><td>$F(b) - F(a) + p(a)$</td></tr>
+      <tr><td>$P(a < X < b)$</td><td>$F(b) - F(a) - p(b)$</td></tr>
+      <tr><td>$P(a \le X < b)$</td><td>$F(b) - F(a) - p(b) + p(a)$</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section class="section">
+  <h2 style="margin-top:0">On the exam, in order of priority</h2>
+  <ol>
+    <li>Write what you know and what you're asked — in symbols.</li>
+    <li>Identify the chapter and the matching formula (addition? Bayes? linearity?).</li>
+    <li>Plug in, simplify, box the answer.</li>
+    <li>Sanity check: probabilities in $[0, 1]$, variances $\ge 0$, pmfs sum to 1.</li>
+    <li>Rounding: exact or 4 decimal places.</li>
+  </ol>
+</section>
+
+</main>
+
+<footer>Built for the MATH 2411 midterm · HKUST Fall 2026</footer>
+
+</body>
+</html>

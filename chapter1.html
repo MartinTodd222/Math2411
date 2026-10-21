@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Chapter 1 · Descriptive Statistics — MATH 2411</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📊</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Newsreader:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+<script>
+  MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] } };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+</head>
+<body>
+
+<header class="top">
+  <div class="top-inner">
+    <div class="brand">MATH 2411 Midterm<small>HKUST · Fall 2026</small></div>
+    <nav class="chapternav">
+      <a href="index.html">Overview</a>
+      <a href="chapter1.html" class="active">Ch 1</a>
+      <a href="chapter2.html">Ch 2</a>
+      <a href="chapter3.html">Ch 3</a>
+      <a href="formulas.html">Formulas</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+<div class="chapter-layout">
+<aside class="chapter-sidebar">
+  <h4>In this chapter</h4>
+  <ul>
+    <li><a href="#data">Data &amp; variable types</a></li>
+    <li><a href="#center">Measures of center</a></li>
+    <li><a href="#spread">Measures of spread</a></li>
+    <li><a href="#quartiles">Quartiles (np+0.5)</a></li>
+    <li><a href="#boxplot">Boxplot &amp; outliers</a></li>
+    <li><a href="#shape">Histogram &amp; shape</a></li>
+    <li><a href="#pitfalls">Pitfalls</a></li>
+  </ul>
+</aside>
+
+<div>
+
+<h1>Chapter 1 — Descriptive Statistics</h1>
+<p class="lede">Numerical and graphical ways to summarize a data set: center, spread, quartiles, and how to spot outliers.</p>
+
+<!-- ================= 1.1 DATA ================= -->
+<section class="section" id="data">
+  <h2 style="margin-top:0">1.1 Data and types of variables</h2>
+
+  <p>A <strong>data set</strong> is a table: each row is a <em>case</em> (subject), each column a <em>variable</em>, each cell an <em>observation</em>.</p>
+
+  <h3>Two main types</h3>
+  <table>
+    <thead><tr><th>Type</th><th>Subtype</th><th>Example</th></tr></thead>
+    <tbody>
+      <tr><td rowspan="2"><strong>Categorical</strong><br><small>label answer</small></td><td>Nominal (no order)</td><td>Favorite flavor, Yes/No, blood type</td></tr>
+      <tr><td>Ordinal (ranked)</td><td>Satisfaction 1–5, education level</td></tr>
+      <tr><td rowspan="2"><strong>Quantitative</strong><br><small>numerical answer</small></td><td>Discrete (counting)</td><td>Number of courses, number of siblings</td></tr>
+      <tr><td>Continuous (measuring)</td><td>Height, weight, time</td></tr>
+    </tbody>
+  </table>
+
+  <div class="pitfall">
+    <span class="label">Pitfall</span>
+    Categorical variables may be coded as numbers (Yes = 1, No = 0, satisfaction 1–5). <mark class="hl">Do not take averages of them</mark>. A student ID is <em>nominal</em>, not quantitative.
+  </div>
+</section>
+
+<!-- ================= 1.2 CENTER ================= -->
+<section class="section" id="center">
+  <h2 style="margin-top:0">1.2 Measures of center</h2>
+
+  <p>Throughout we have $n$ observations $x_1, \ldots, x_n$ with ordered values $x_{(1)} \le \cdots \le x_{(n)}$.</p>
+
+  <div class="definition">
+    <span class="label">Sample mean</span>
+    $$\bar{x} = \frac{1}{n}\sum_{i=1}^{n} x_i$$
+  </div>
+
+  <div class="definition">
+    <span class="label">Sample median</span>
+    $$\tilde{x} = \begin{cases} x_{((n+1)/2)}, & n \text{ odd} \\ \tfrac{1}{2}\left(x_{(n/2)} + x_{(n/2+1)}\right), & n \text{ even} \end{cases}$$
+  </div>
+
+  <div class="definition">
+    <span class="label">Trimmed mean</span>
+    Trim away a given percentage from <em>both</em> ends of the ordered data, then average the rest. The <em>10% trimmed mean</em> $\bar{x}_{tr(10)}$ drops the top and bottom 10%.
+  </div>
+
+  <h3>Which one to use?</h3>
+  <ul>
+    <li>The <strong>mean</strong> is sensitive to outliers.</li>
+    <li>The <strong>median</strong> is robust (not affected by extreme values).</li>
+    <li>The <strong>trimmed mean</strong> is in between — uses more data than the median, less sensitive than the mean.</li>
+  </ul>
+
+  <div class="example">
+    <span class="label">Worked example — stem weights (n = 10, nitrogen group)</span>
+    Data (sorted): 0.26, 0.43, 0.46, 0.47, 0.49, 0.52, 0.62, 0.75, 0.79, 0.86
+    <ul>
+      <li>Mean: $\bar{x} = 5.65/10 = 0.565$ g</li>
+      <li>Median: average of 5th and 6th = $(0.49 + 0.52)/2 = 0.505$ g</li>
+      <li>10% trimmed mean: drop 1 from each end → average of 8 middle values = 0.56625 g</li>
+    </ul>
+    The few large values (0.75–0.86) pull the mean above the median.
+  </div>
+</section>
+
+<!-- ================= 1.2 SPREAD ================= -->
+<section class="section" id="spread">
+  <h2 style="margin-top:0">Measures of spread (variability)</h2>
+
+  <div class="definition">
+    <span class="label">Sample variance — this course uses n − 1</span>
+    $$s^2 = s^2_{n-1} = \frac{1}{n-1}\sum_{i=1}^{n}(x_i - \bar{x})^2$$
+    The quantity $n - 1$ is the number of <em>degrees of freedom</em>: the deviations $x_i - \bar{x}$ always sum to zero, so only $n - 1$ of them are free.
+  </div>
+
+  <div class="definition">
+    <span class="label">Standard deviation and range</span>
+    $$s = \sqrt{s^2}, \qquad \text{range} = x_{\max} - x_{\min}, \qquad IQR = Q_3 - Q_1$$
+    Same unit as the data. All measures are $\ge 0$, with equality iff all data points are equal.
+  </div>
+
+  <div class="example">
+    <span class="label">Worked example — pH meter (n = 10)</span>
+    Data: 7.07, 7.00, 7.10, 6.97, 7.00, 7.03, 7.01, 7.01, 6.98, 7.08
+    <ul>
+      <li>$\bar{x} = 7.0250$</li>
+      <li>$s^2 = \dfrac{(7.07 - 7.025)^2 + \cdots + (7.08 - 7.025)^2}{9} = 0.001939$</li>
+      <li>$s = \sqrt{0.001939} = 0.0440$ with 9 degrees of freedom</li>
+    </ul>
+  </div>
+
+  <div class="key-points">
+    <h4>Linear transformation rule</h4>
+    If every data point becomes $y_i = a\,x_i + b$:
+    <ul>
+      <li>New mean: $\bar{y} = a\bar{x} + b$</li>
+      <li>New standard deviation: $s_y = |a| \cdot s_x$ (the shift $b$ does not change spread)</li>
+      <li>New variance: $s_y^2 = a^2 s_x^2$</li>
+    </ul>
+    This matches the random-variable rule $\mathrm{Var}(aX + b) = a^2 \mathrm{Var}(X)$ in Chapter 3.
+  </div>
+</section>
+
+<!-- ================= QUARTILES ================= -->
+<section class="section" id="quartiles">
+  <h2 style="margin-top:0">1.3 Percentiles and quartiles — the np + 0.5 rule</h2>
+
+  <p>The $p$-th <strong>percentile</strong> is the value with $p\%$ of the data at or below it. The <strong>quartiles</strong> $Q_1, Q_2, Q_3$ correspond to $p = 0.25, 0.50, 0.75$.</p>
+
+  <div class="definition">
+    <span class="label">Course rule — np + 0.5</span>
+    For $p \in \{0.25, 0.50, 0.75\}$, compute $m^* = np + 0.5$.
+    <ul>
+      <li>If $m^*$ is an <strong>integer</strong> $m$, the quartile is the $m$-th smallest data point.</li>
+      <li>If $m^*$ is <strong>not</strong> an integer, let $m = \lfloor m^* \rfloor$ (the largest integer below). The quartile is the average of the $m$-th and $(m+1)$-th smallest.</li>
+    </ul>
+  </div>
+
+  <div class="pitfall">
+    <span class="label">Pitfall</span>
+    R's <code>quantile()</code> uses a different method and can give different quartiles. <mark class="hl">On the exam, always use the np + 0.5 rule.</mark>
+  </div>
+
+  <div class="example">
+    <span class="label">Worked example (n = 11)</span>
+    Data (sorted): 2, 2, 4, 5, 5, 5, 8, 9, 9, 9, 12
+    <table>
+      <thead><tr><th></th><th>np + 0.5</th><th>Rule</th><th>Value</th></tr></thead>
+      <tbody>
+        <tr><td>$Q_1$</td><td>$11(0.25) + 0.5 = 3.25$</td><td>avg of 3rd &amp; 4th</td><td>$(4+5)/2 = 4.5$</td></tr>
+        <tr><td>$Q_2$</td><td>$11(0.50) + 0.5 = 6$</td><td>6th value</td><td>5</td></tr>
+        <tr><td>$Q_3$</td><td>$11(0.75) + 0.5 = 8.75$</td><td>avg of 8th &amp; 9th</td><td>$(9+9)/2 = 9$</td></tr>
+      </tbody>
+    </table>
+    So $IQR = 9 - 4.5 = 4.5$.
+  </div>
+</section>
+
+<!-- ================= BOXPLOT ================= -->
+<section class="section" id="boxplot">
+  <h2 style="margin-top:0">Boxplot and outliers</h2>
+
+  <p>A <strong>boxplot</strong> shows the five-number summary: min, $Q_1$, median, $Q_3$, max. The box goes from $Q_1$ to $Q_3$ with a line at the median; whiskers extend to the most extreme non-outliers.</p>
+
+  <div class="definition">
+    <span class="label">Outlier rule — 1.5 · IQR</span>
+    A point $x$ is an outlier if
+    $$x \le Q_1 - 1.5 \cdot IQR \quad \text{or} \quad x \ge Q_3 + 1.5 \cdot IQR.$$
+    Note: $\le$ and $\ge$, not strict. A point <em>exactly on</em> the fence <mark class="hl">is</mark> an outlier.
+  </div>
+
+  <div class="example">
+    <span class="label">Worked example — Challenger (n = 25)</span>
+    Launch temperatures (°F): 66, 70, 69, 80, 68, 67, 72, 70, 70, 57, 63, 70, 78, 67, 53, 67, 75, 70, 81, 76, 79, 75, 76, 58, 29.
+    <ul>
+      <li>$Q_1 = 66.5$, $Q_3 = 75.5$, $IQR = 9$</li>
+      <li>Lower fence: $66.5 - 1.5(9) = 53$</li>
+      <li>Upper fence: $75.5 + 1.5(9) = 89$</li>
+      <li>$29 \le 53$ and $53 \le 53$ — <strong>both 29 and 53 are flagged as outliers</strong></li>
+    </ul>
+    The failed Challenger launch at 29°F was a clear outlier.
+  </div>
+
+  <div class="example">
+    <span class="label">Worked example (n = 15)</span>
+    Data: 3, 4, 12, 13, 14, 15, 16, 17, 18, 18, 19, 20, 20, 57, 89.
+    <ul>
+      <li>$Q_1$: $15(0.25) + 0.5 = 4.25 \to (13+14)/2 = 13.5$</li>
+      <li>$Q_2$: $15(0.50) + 0.5 = 8 \to$ 8th value = 17</li>
+      <li>$Q_3$: $15(0.75) + 0.5 = 11.75 \to (19+20)/2 = 19.5$</li>
+      <li>$IQR = 6$, fences $13.5 - 9 = 4.5$ and $19.5 + 9 = 28.5$</li>
+      <li><strong>Outliers:</strong> 3, 4 (low) and 57, 89 (high)</li>
+      <li>Mean = 22.33, variance = 485.81, sd = 22.04 — the mean sits far above the median (17) because of 57 and 89.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ================= HISTOGRAM/SHAPE ================= -->
+<section class="section" id="shape">
+  <h2 style="margin-top:0">Histogram and distribution shape</h2>
+
+  <h3>Building a histogram</h3>
+  <ol>
+    <li>Decide the number of class intervals (typically 5–20).</li>
+    <li>Divide the range by that number to get class width.</li>
+    <li>Set <strong>boundaries</strong> with one more decimal than the data, so no value falls on a boundary.</li>
+    <li>Table with class interval, midpoint, frequency. Relative frequency = frequency / $n$.</li>
+  </ol>
+
+  <h3>Skewness and modality</h3>
+  <table>
+    <thead><tr><th>Shape</th><th>Mean vs. median</th><th>Which to report</th></tr></thead>
+    <tbody>
+      <tr><td>Symmetric</td><td>mean ≈ median</td><td>mean (if also unimodal, no outliers)</td></tr>
+      <tr><td>Right-skewed (long right tail)</td><td>mean &gt; median</td><td>median (e.g. house prices, income)</td></tr>
+      <tr><td>Left-skewed (long left tail)</td><td>mean &lt; median</td><td>median</td></tr>
+    </tbody>
+  </table>
+
+  <p>A distribution can be <em>unimodal</em> (one peak), <em>bimodal</em> (two peaks), etc.</p>
+
+  <h3>Presenting categorical data</h3>
+  <ul>
+    <li><strong>Frequency table:</strong> counts and percentages per category.</li>
+    <li><strong>Cumulative columns</strong> only make sense for <em>ordinal</em> variables (nominal has no natural order).</li>
+    <li><strong>Pie chart</strong> for shares of a whole; <strong>bar chart</strong> for counts or percentages.</li>
+  </ul>
+</section>
+
+<!-- ================= PITFALLS ================= -->
+<section class="section" id="pitfalls">
+  <h2 style="margin-top:0">Chapter 1 pitfalls — the T/F traps</h2>
+  <ol>
+    <li>Averaging a categorical variable coded with numbers (Yes = 1, No = 0 does <em>not</em> make it quantitative).</li>
+    <li>Forgetting to <strong>sort</strong> the data before finding median or quartiles.</li>
+    <li>Using $n$ instead of $n - 1$ in the sample variance.</li>
+    <li>Using R's <code>quantile()</code> convention instead of the course's $np + 0.5$ rule.</li>
+    <li>Reporting the <strong>mean</strong> for strongly skewed data — use the median.</li>
+    <li>Forgetting that the outlier rule uses $\le$ / $\ge$: a point exactly on a fence <strong>is</strong> an outlier.</li>
+    <li>Mixing up a <em>sample</em> statistic ($\bar{x}, s$) with a <em>population</em> parameter ($\mu, \sigma$).</li>
+  </ol>
+</section>
+
+<p style="text-align: center; margin-top: 32px;">
+  <a href="chapter2.html" class="card-link" style="display: inline-block; background: var(--accent); color: white; padding: 10px 24px; border-radius: 6px; font-weight: 600;">Next: Chapter 2 — Probability →</a>
+</p>
+
+</div>
+</div>
+</main>
+
+<footer>Built for the MATH 2411 midterm · HKUST Fall 2026</footer>
+
+</body>
+</html>

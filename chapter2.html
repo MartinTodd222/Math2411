@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Chapter 2 · Probability — MATH 2411</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎲</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Newsreader:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+<script>
+  MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] } };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+</head>
+<body>
+
+<header class="top">
+  <div class="top-inner">
+    <div class="brand">MATH 2411 Midterm<small>HKUST · Fall 2026</small></div>
+    <nav class="chapternav">
+      <a href="index.html">Overview</a>
+      <a href="chapter1.html">Ch 1</a>
+      <a href="chapter2.html" class="active">Ch 2</a>
+      <a href="chapter3.html">Ch 3</a>
+      <a href="formulas.html">Formulas</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+<div class="chapter-layout">
+<aside class="chapter-sidebar">
+  <h4>In this chapter</h4>
+  <ul>
+    <li><a href="#sample">Sample space &amp; events</a></li>
+    <li><a href="#axioms">Kolmogorov axioms</a></li>
+    <li><a href="#addition">Addition rule</a></li>
+    <li><a href="#counting">Counting techniques</a></li>
+    <li><a href="#birthday">Birthday problem</a></li>
+    <li><a href="#conditional">Conditional probability</a></li>
+    <li><a href="#total">Law of total probability</a></li>
+    <li><a href="#bayes">Bayes' theorem</a></li>
+    <li><a href="#independence">Independence</a></li>
+    <li><a href="#pitfalls">Pitfalls</a></li>
+  </ul>
+</aside>
+
+<div>
+
+<h1>Chapter 2 — Probability</h1>
+<p class="lede">The language of randomness: sample spaces, events, counting outcomes, and updating probabilities with Bayes' theorem.</p>
+
+<!-- ======== SAMPLE SPACE ======== -->
+<section class="section" id="sample">
+  <h2 style="margin-top:0">2.1 Sample space and events</h2>
+
+  <ul>
+    <li><strong>Random experiment:</strong> a process whose outcome cannot be known before it is performed.</li>
+    <li><strong>Sample space</strong> $S$: set of <em>all</em> possible outcomes.</li>
+    <li><strong>Event:</strong> a subset of $S$. The event $A$ occurs if the outcome belongs to $A$.</li>
+  </ul>
+
+  <h3>Set operations on events</h3>
+  <table>
+    <thead><tr><th>Operation</th><th>Meaning</th><th>Notation</th></tr></thead>
+    <tbody>
+      <tr><td>Union</td><td>$A$ or $B$ (or both)</td><td>$A \cup B$</td></tr>
+      <tr><td>Intersection</td><td>both $A$ and $B$</td><td>$A \cap B$ (or $AB$)</td></tr>
+      <tr><td>Complement</td><td>$A$ does <em>not</em> occur</td><td>$A^c$</td></tr>
+      <tr><td>Difference</td><td>$A$ but not $B$</td><td>$A - B = A \cap B^c$</td></tr>
+    </tbody>
+  </table>
+
+  <ul>
+    <li>Events whose union is $S$ are <strong>exhaustive</strong>.</li>
+    <li>Events with no common element are <strong>disjoint</strong> (mutually exclusive).</li>
+    <li>$A$ and $A^c$ are both disjoint and exhaustive.</li>
+  </ul>
+
+  <div class="definition">
+    <span class="label">De Morgan's laws</span>
+    $$(A \cap B)^c = A^c \cup B^c, \qquad (A \cup B)^c = A^c \cap B^c$$
+    In words: "not (A and B)" = "not A or not B". Very useful with the complement rule: $P(\text{at least one}) = 1 - P(\text{none})$.
+  </div>
+</section>
+
+<!-- ======== AXIOMS ======== -->
+<section class="section" id="axioms">
+  <h2 style="margin-top:0">2.2 Probability — Kolmogorov axioms</h2>
+
+  <div class="definition">
+    <span class="label">The three axioms</span>
+    A probability $P$ on $S$ assigns $P(E) \in \mathbb{R}$ to each event $E$ such that:
+    <ol>
+      <li><strong>Non-negativity:</strong> $P(E) \ge 0$.</li>
+      <li><strong>Normalization:</strong> $P(S) = 1$.</li>
+      <li><strong>Countable additivity:</strong> for pairwise disjoint $E_1, E_2, \ldots$,
+        $$P\!\left(\bigcup_{i=1}^{\infty} E_i\right) = \sum_{i=1}^{\infty} P(E_i).$$</li>
+    </ol>
+  </div>
+
+  <h3>Properties that follow</h3>
+  <ul>
+    <li>$P(\emptyset) = 0$</li>
+    <li>$P(A^c) = 1 - P(A)$ — the complement rule</li>
+    <li>Monotonicity: $A \subseteq B \Rightarrow P(A) \le P(B)$</li>
+    <li>$0 \le P(A) \le 1$ (not an axiom — it <em>follows</em> from the axioms)</li>
+  </ul>
+</section>
+
+<!-- ======== ADDITION ======== -->
+<section class="section" id="addition">
+  <h2 style="margin-top:0">Addition rule and inclusion–exclusion</h2>
+
+  <div class="definition">
+    <span class="label">Two events</span>
+    $$P(A \cup B) = P(A) + P(B) - P(A \cap B)$$
+    Subtract $P(A \cap B)$ because adding $P(A) + P(B)$ counts the overlap twice. If $A$ and $B$ are disjoint, $P(A \cap B) = 0$ and the formula reduces to $P(A) + P(B)$.
+  </div>
+
+  <div class="definition">
+    <span class="label">Three events (inclusion–exclusion)</span>
+    $$P(A_1 \cup A_2 \cup A_3) = \sum P(A_i) - \sum_{i<j} P(A_iA_j) + P(A_1A_2A_3)$$
+    Alternate signs: add singles, subtract pairs, add triples, ...
+  </div>
+
+  <div class="example">
+    <span class="label">Worked example — cards</span>
+    From a 52-card deck:
+    <ul>
+      <li><strong>Jack or three</strong> (disjoint): $P = \tfrac{4}{52} + \tfrac{4}{52} = \tfrac{8}{52}$</li>
+      <li><strong>Jack or red card</strong> (overlap: 2 red jacks): $P = \tfrac{4}{52} + \tfrac{26}{52} - \tfrac{2}{52} = \tfrac{28}{52}$</li>
+    </ul>
+  </div>
+
+  <div class="example">
+    <span class="label">Worked example — two job offers</span>
+    $P(A) = 0.8$, $P(B) = 0.6$, $P(A \cap B) = 0.5$.
+    <ul>
+      <li>At least one offer: $0.8 + 0.6 - 0.5 = 0.9$</li>
+      <li>Exactly one: $0.9 - 0.5 = 0.4$</li>
+      <li>No offer: $1 - 0.9 = 0.1$</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ======== COUNTING ======== -->
+<section class="section" id="counting">
+  <h2 style="margin-top:0">2.3 Counting techniques</h2>
+
+  <div class="definition">
+    <span class="label">Equally likely outcomes</span>
+    If $S$ has $N$ equally likely outcomes, then for any event $E$:
+    $$P(E) = \frac{|E|}{N} = \frac{\text{number of outcomes in } E}{N}$$
+  </div>
+
+  <div class="pitfall">
+    <span class="label">Pitfall</span>
+    This formula requires the outcomes to be <mark class="hl">equally likely</mark>. Toss a coin twice and record the <em>number</em> of heads: $S = \{0, 1, 2\}$, but $P(1) = 1/2 \ne 1/3$. The outcomes are not equally likely.
+  </div>
+
+  <h3>Counting principles</h3>
+  <ul>
+    <li><strong>Addition principle:</strong> if a task can be done in one of several non-overlapping ways with $m_1, m_2, \ldots$ outcomes, the total is $m_1 + m_2 + \cdots$.</li>
+    <li><strong>Multiplication principle:</strong> if a task has $n$ sequential steps with $m_1, \ldots, m_n$ outcomes, the total is $m_1 \cdot m_2 \cdots m_n$.</li>
+  </ul>
+
+  <h3>Permutations and combinations</h3>
+  <table>
+    <thead><tr><th>Situation</th><th>Formula</th><th>Order matters?</th></tr></thead>
+    <tbody>
+      <tr><td>Permutations of $n$</td><td>$n!$</td><td>Yes</td></tr>
+      <tr><td>Ordered, $r$ of $n$</td><td>$\dfrac{n!}{(n-r)!} = n(n-1)\cdots(n-r+1)$</td><td>Yes</td></tr>
+      <tr><td>Circular arrangements of $n$</td><td>$(n-1)!$</td><td>Yes, rotations identified</td></tr>
+      <tr><td>Combinations: $r$ of $n$</td><td>$\dbinom{n}{r} = \dfrac{n!}{r!(n-r)!}$</td><td>No</td></tr>
+      <tr><td>Partition into groups of sizes $n_1, \ldots, n_k$</td><td>$\dfrac{n!}{n_1!\, n_2! \cdots n_k!}$</td><td>Group assignment matters</td></tr>
+    </tbody>
+  </table>
+
+  <p><strong>Decision rule:</strong> ask "does order matter?" President/treasurer → <em>permutation</em>. Choosing a 5-person committee → <em>combination</em>.</p>
+
+  <div class="example">
+    <span class="label">Worked example — club officers (n = 50)</span>
+    Choose president and treasurer:
+    <ul>
+      <li>No restrictions: $50 \times 49 = 2450$.</li>
+      <li>Person A serves only if president: (A pres: 49) + (A not chosen: $49 \times 48$) = 49 + 2352 = <strong>2401</strong>.</li>
+      <li>B and C together or not at all: (both: 2) + (neither: $48 \times 47$) = 2 + 2256 = <strong>2258</strong>.</li>
+      <li>D and E not together: $2450 - 2 = 2448$.</li>
+    </ul>
+  </div>
+
+  <div class="example">
+    <span class="label">Worked example — arrangements of STATISTICS</span>
+    10 letters with S×3, T×3, I×2, A×1, C×1:
+    $$\frac{10!}{3!\,3!\,2!} = 50{,}400$$
+  </div>
+
+  <div class="example">
+    <span class="label">Worked example — hotel rooms</span>
+    7 students into 1 triple and 2 doubles:
+    $$\binom{7}{3,2,2} = \frac{7!}{3!\,2!\,2!} = 210$$
+  </div>
+</section>
+
+<!-- ======== BIRTHDAY ======== -->
+<section class="section" id="birthday">
+  <h2 style="margin-top:0">The birthday problem — the "at least" trick</h2>
+
+  <p>In a room of $n$ people, what is the probability that at least two share a birthday? Use the <strong>complement</strong>:</p>
+  $$P(\text{at least two share}) = 1 - \frac{365 \times 364 \times \cdots \times (365 - n + 1)}{365^n}$$
+
+  <table>
+    <thead><tr><th>$n$</th><th>20</th><th>23</th><th>25</th><th>30</th><th>50</th><th>100</th></tr></thead>
+    <tbody>
+      <tr><td>$P$</td><td>0.41</td><td>0.51</td><td>0.57</td><td>0.71</td><td>0.97</td><td>0.9999997</td></tr>
+    </tbody>
+  </table>
+
+  <div class="key-points">
+    <h4>General rule for "at least" problems</h4>
+    Compute the complement: $P(\text{at least one}) = 1 - P(\text{none})$. It is almost always easier than enumerating all the "at least" cases.
+  </div>
+</section>
+
+<!-- ======== CONDITIONAL ======== -->
+<section class="section" id="conditional">
+  <h2 style="margin-top:0">2.4 Conditional probability</h2>
+
+  <div class="definition">
+    <span class="label">Definition</span>
+    For events $A, B$ with $P(B) > 0$:
+    $$P(A \mid B) = \frac{P(A \cap B)}{P(B)}$$
+    Intuition: $B$ becomes the new sample space, rescaled so $P(B \mid B) = 1$.
+  </div>
+
+  <div class="definition">
+    <span class="label">Multiplication (product) rule</span>
+    $$P(A \cap B) = P(A \mid B) \, P(B) = P(B \mid A) \, P(A)$$
+    For $n$ events (chain rule):
+    $$P(A_1 \cap \cdots \cap A_n) = P(A_1) \cdot P(A_2 \mid A_1) \cdot P(A_3 \mid A_1 A_2) \cdots P(A_n \mid A_1 \cdots A_{n-1})$$
+  </div>
+
+  <div class="example">
+    <span class="label">Worked example — fuses</span>
+    A box has 20 fuses, 5 defective. Three removed without replacement — all defective?
+    $$P = \frac{5}{20} \cdot \frac{4}{19} \cdot \frac{3}{18} = \frac{1}{114}$$
+  </div>
+
+  <h3>Properties of conditional probability</h3>
+  <p>Conditional probability behaves like an ordinary probability on the conditioning event:</p>
+  <ul>
+    <li>$P(A \mid B) = 1 - P(A^c \mid B)$</li>
+    <li>$P(A \cup B \mid D) = P(A \mid D) + P(B \mid D) - P(A \cap B \mid D)$</li>
+    <li>$P(A \cap B \mid D) = P(A \mid B \cap D) \cdot P(B \mid D)$</li>
+  </ul>
+</section>
+
+<!-- ======== TOTAL ======== -->
+<section class="section" id="total">
+  <h2 style="margin-top:0">Law of total probability</h2>
+
+  <p>Events $B_1, \ldots, B_n$ form a <strong>partition</strong> of $S$ if they are pairwise disjoint and $\bigcup B_i = S$. ($B$ and $B^c$ are the simplest partition.)</p>
+
+  <div class="definition">
+    <span class="label">Law of total probability</span>
+    If $B_1, \ldots, B_n$ partition $S$ with $0 < P(B_i) < 1$, then for any event $A$:
+    $$P(A) = \sum_{i=1}^{n} P(A \mid B_i) \, P(B_i)$$
+  </div>
+
+  <p><strong>Tree-diagram method:</strong> draw first-level branches for each $B_i$ labeled $P(B_i)$, and second-level branches for $A$ labeled $P(A \mid B_i)$. Multiply along each path ending in $A$, then add the paths.</p>
+
+  <div class="example">
+    <span class="label">Worked example — defective products</span>
+    Three machines I, II, III make 30%, 45%, 25% of products with defect rates 2%, 3%, 2%.
+    $$P(\text{defective}) = 0.30(0.02) + 0.45(0.03) + 0.25(0.02) = 0.0245$$
+  </div>
+</section>
+
+<!-- ======== BAYES ======== -->
+<section class="section" id="bayes">
+  <h2 style="margin-top:0">Bayes' theorem</h2>
+
+  <div class="definition">
+    <span class="label">Bayes — short form</span>
+    $$P(B \mid A) = \frac{P(A \mid B)\, P(B)}{P(A)}$$
+  </div>
+
+  <div class="definition">
+    <span class="label">Bayes — full form (with partition)</span>
+    If $B_1, \ldots, B_n$ partition $S$ with $0 < P(B_i) < 1$:
+    $$P(B_j \mid A) = \frac{P(A \mid B_j) \, P(B_j)}{\sum_{i=1}^{n} P(A \mid B_i) \, P(B_i)}$$
+    Numerator is one tree path; denominator is the sum of all paths leading to $A$.
+  </div>
+
+  <h3>Prior vs. posterior</h3>
+  <ul>
+    <li>$P(B_j)$ is the <strong>prior</strong> — before you know $A$ happened.</li>
+    <li>$P(B_j \mid A)$ is the <strong>posterior</strong> — after you incorporate the evidence $A$.</li>
+  </ul>
+
+  <div class="example">
+    <span class="label">Worked example — which machine made the defective product?</span>
+    Continuing the defective-products example, given a product is defective:
+    $$P(\text{III} \mid \text{def}) = \frac{0.25 \times 0.02}{0.0245} = \frac{10}{49} \approx 0.204$$
+    Similarly $P(\text{I} \mid \text{def}) \approx 0.245$ and $P(\text{II} \mid \text{def}) \approx 0.551$. Machine II makes 45% of products but accounts for 55% of defectives.
+  </div>
+
+  <div class="example">
+    <span class="label">Worked example — diagnostic test (base-rate fallacy)</span>
+    Prevalence $P(B) = 0.0004$. Sensitivity $P(A \mid B) = 0.95$. Specificity $P(A^c \mid B^c) = 0.90$, so $P(A \mid B^c) = 0.10$.
+    $$P(B \mid A) = \frac{0.95 \times 0.0004}{0.95 \times 0.0004 + 0.10 \times 0.9996} \approx 0.0038$$
+    Even after a positive test, the probability of being infected is only 0.38%! The infection is so rare that almost all positives are false positives. The test still raises the probability ~10-fold (from 0.04% to 0.38%).
+  </div>
+
+  <div class="example">
+    <span class="label">Worked example — Monty Hall</span>
+    Three doors, car behind one. You pick Door I. Host (who knows) opens Door III (goat). Switch to Door II?
+    <ul>
+      <li>$P(B_i) = 1/3$, $P(A \mid B_1) = 1/2$, $P(A \mid B_2) = 1$, $P(A \mid B_3) = 0$.</li>
+      <li>$P(A) = 1/2$</li>
+      <li>$P(B_1 \mid A) = \dfrac{(1/3)(1/2)}{1/2} = \dfrac{1}{3}$ (stick)</li>
+      <li>$P(B_2 \mid A) = \dfrac{(1/3)(1)}{1/2} = \dfrac{2}{3}$ (switch)</li>
+    </ul>
+    <strong>Always switch — it doubles your probability of winning.</strong>
+  </div>
+</section>
+
+<!-- ======== INDEPENDENCE ======== -->
+<section class="section" id="independence">
+  <h2 style="margin-top:0">2.5 Independence</h2>
+
+  <div class="definition">
+    <span class="label">Definition</span>
+    Events $A$ and $B$ are <strong>independent</strong> if
+    $$P(A \cap B) = P(A) \, P(B)$$
+    Equivalently (when $P(B) > 0$): $P(A \mid B) = P(A)$ — knowing $B$ does not change the probability of $A$.
+  </div>
+
+  <ul>
+    <li>If $A, B$ are independent, so are $A$ and $B^c$, $A^c$ and $B$, and $A^c$ and $B^c$.</li>
+    <li>$A_1, \ldots, A_n$ are <strong>mutually</strong> independent if the product rule holds for every subcollection.</li>
+  </ul>
+
+  <div class="pitfall">
+    <span class="label">Pitfall — independent ≠ disjoint</span>
+    If $A, B$ are disjoint with $P(A), P(B) > 0$, then $P(A \cap B) = 0 \ne P(A)P(B)$, so they are <mark class="hl">dependent</mark>. If $A$ happened, you <em>know</em> $B$ didn't — that's the opposite of independence.
+  </div>
+</section>
+
+<!-- ======== PITFALLS ======== -->
+<section class="section" id="pitfalls">
+  <h2 style="margin-top:0">Chapter 2 pitfalls — the T/F traps</h2>
+  <ol>
+    <li>Using $|E|/N$ when outcomes are <strong>not</strong> equally likely.</li>
+    <li>Forgetting to subtract $P(A \cap B)$ in the addition rule when events overlap.</li>
+    <li>Mixing up <strong>permutations</strong> (order matters) and <strong>combinations</strong> (order does not).</li>
+    <li>Confusing $P(A \mid B)$ with $P(B \mid A)$ — the diagnostic-test example shows how different they can be.</li>
+    <li>Confusing <strong>disjoint</strong> with <strong>independent</strong> — they are nearly opposites.</li>
+    <li>Forgetting that the conditioning event changes the sample space (new denominator).</li>
+    <li>Doing "at least one/two" problems directly — use the complement.</li>
+    <li>Thinking $P(E) \le 1$ is an axiom — it <em>follows</em> from them.</li>
+    <li>Writing "complementary ⇒ disjoint" (true) and "disjoint ⇒ complementary" (false — need union to be $S$ too).</li>
+  </ol>
+</section>
+
+<p style="text-align: center; margin-top: 32px;">
+  <a href="chapter3.html" class="card-link" style="display: inline-block; background: var(--accent); color: white; padding: 10px 24px; border-radius: 6px; font-weight: 600;">Next: Chapter 3 — Random Variables →</a>
+</p>
+
+</div>
+</div>
+</main>
+
+<footer>Built for the MATH 2411 midterm · HKUST Fall 2026</footer>
+
+</body>
+</html>
